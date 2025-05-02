@@ -9,7 +9,7 @@ function filterVideos(videos, searchText) {
 
 function SearchVideoList({ videos }) {
 
-    const [ searchText, setSearchText ] = useState('Geografia')
+    const [ searchText, setSearchText ] = useState('')
     const foundVideos = filterVideos(videos, searchText)
 
     return (

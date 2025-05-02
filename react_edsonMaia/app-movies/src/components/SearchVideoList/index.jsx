@@ -1,5 +1,5 @@
 import styles from "./SearchVideoList.module.css";
-import VideoList from "../../components/VideoList";
+import VideoList from "../VideoList";
 import { useState } from "react";
 
 // filtrando videos por categoria ou titulo

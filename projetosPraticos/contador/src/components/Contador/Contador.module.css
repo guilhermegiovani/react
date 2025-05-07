@@ -1,0 +1,21 @@
+.container {
+    background-color: #cfcfcf;
+    height: 200px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container div {
+    display: flex;
+    gap: 7px;
+}
+
+.container button {
+    transition: .3s;
+}
+
+.container button:hover {
+    background-color: bisque;
+}

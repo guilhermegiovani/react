@@ -9,10 +9,16 @@ function Contador() {
     const max = 5
     const min = -5
 
-    const colorText = 
-        count > 0 ? styles.positive  : ''
-        count < 0 ? styles.negative  : ''
+    let colorText = 
+        count > 0 ? styles.positive :
+        count < 0 ? styles.negative :
         styles.neutro
+
+    // if(count > 0) {
+    //     colorText = styles.positive
+    // } else if(count < 0) {
+    //     colorText = styles.negative
+    // }
 
     const increaseCounter = () => {
         if (count >= max) {
@@ -35,14 +41,15 @@ function Contador() {
     return (
         <div className={styles.container}>
             {
-                count === max ? <Message text="Limite Máximo atingido! Reseta ou Diminua o contador!" /> : ''
+                count === max ? <Message text="Limite Máximo atingido! Resete ou Diminua o contador!" /> : ''
             }
 
             {
-                count === min ? <Message text="Limite Minimo atingido! Reseta ou Aumente o contador!" /> : ''
+                count === min ? <Message text="Limite Minimo atingido! Resete ou Aumente o contador!" /> : ''
             }
 
             <h1 className={colorText}>{count}</h1>
+            {/* style={{ color: count > 0 ? 'green' : count < 0 ? 'red' : 'black' }} */}
 
             <div>
                 <Button text="Aumentar" onHandle={increaseCounter} />

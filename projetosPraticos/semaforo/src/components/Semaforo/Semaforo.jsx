@@ -16,9 +16,9 @@ function Semaforo() {
     return (
         <div className={styles.container}>
             <div className={styles.semaforo}>
-                <div className={`${styles.luz} ${currentColor === 'red' ? 'red' : ''}`}></div>
-                <div className={`${styles.luz} ${currentColor === 'yellow' ? 'yellow' : ''}`}></div>
-                <div className={`${styles.luz} ${currentColor === 'green' ? 'green' : ''}`}></div>
+                <div className={`${styles.luz} ${currentColor === 'red' ? `${styles.red}` : ''}`}></div>
+                <div className={`${styles.luz} ${currentColor === 'yellow' ? `${styles.yellow}` : ''}`}></div>
+                <div className={`${styles.luz} ${currentColor === 'green' ? `${styles.green}` : ''}`}></div>
             </div>
 
             <div className={styles.button}>

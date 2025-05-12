@@ -15,6 +15,7 @@
     background: #555;
     border-radius: 50%;
     margin: 0 auto;
+    transition: .3s;
 }
 
 .button {
@@ -22,14 +23,14 @@
     gap: 10px;
 }
 
-.vermelho {
+.red {
   background: red;
 }
 
-.amarelo {
+.yellow {
   background: yellow;
 }
 
-.verde {
+.green {
   background: green;
 }

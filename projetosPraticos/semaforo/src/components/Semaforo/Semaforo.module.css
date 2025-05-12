@@ -1,0 +1,35 @@
+.semaforo {
+    background: #333;
+    padding: 20px;
+    border-radius: 20px;
+    width: 100px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.luz {
+    width: 60px;
+    height: 60px;
+    background: #555;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.button {
+    display: flex;
+    gap: 10px;
+}
+
+.vermelho {
+  background: red;
+}
+
+.amarelo {
+  background: yellow;
+}
+
+.verde {
+  background: green;
+}

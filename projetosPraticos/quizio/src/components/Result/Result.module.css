@@ -1,0 +1,31 @@
+.container {
+    background-color: #0000ff;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 500px;
+    width: 400px;
+}
+
+.container div {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex-direction: column;
+}
+
+.container h3 {
+    font-size: 1.4em;
+}
+
+.container p {
+    font-size: 1.1em;
+}
+
+.container span {
+    font-size: 2em;
+    font-weight: bold;
+}

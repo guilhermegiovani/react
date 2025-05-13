@@ -7,9 +7,9 @@ function AppRoutes() {
 
     return (
         <Routes>
-            <Route path="/" elemente={<Home />} />
-            <Route path="/questions" elemente={<Questions />} />
-            <Route path="/result" elemente={<Result />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/result" element={<Result />} />
         </Routes>
     )
 }

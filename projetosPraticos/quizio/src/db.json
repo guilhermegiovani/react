@@ -1,0 +1,102 @@
+[
+    {
+        "pergunta": "Qual é a capital da França?",
+        "opcoes": [
+            "Marsélia",
+            "Lyon",
+            "Paris",
+            "Nice"
+        ],
+        "resposta": "Paris"
+    },
+    {
+        "pergunta": "Qual é o maior planeta do sistema solar?",
+        "opcoes": [
+            "Terra",
+            "Júpiter",
+            "Saturno",
+            "Netuno"
+        ],
+        "resposta": "Júpiter"
+    },
+    {
+        "pergunta": "Qual linguagem é usada para estilizar páginas web?",
+        "opcoes": [
+            "HTML",
+            "Python",
+            "CSS",
+            "Java"
+        ],
+        "resposta": "CSS"
+    },
+    {
+        "pergunta": "Em que país se encontra a Torre de Pisa?",
+        "opcoes": [
+            "França",
+            "Itália",
+            "Grécia",
+            "Espanha"
+        ],
+        "resposta": "Itália"
+    },
+    {
+        "pergunta": "Quem pintou a Mona Lisa?",
+        "opcoes": [
+            "Van Gogh",
+            "Picasso",
+            "Da Vinci",
+            "Michelangelo"
+        ],
+        "resposta": "Da Vinci"
+    },
+    {
+        "pergunta": "Quanto é 9 x 8?",
+        "opcoes": [
+            "72",
+            "81",
+            "64",
+            "88"
+        ],
+        "resposta": "72"
+    },
+    {
+        "pergunta": "Qual desses animais é um mamífero?",
+        "opcoes": [
+            "Tubarão",
+            "Golfinho",
+            "Polvo",
+            "Jacaré"
+        ],
+        "resposta": "Golfinho"
+    },
+    {
+        "pergunta": "Qual elemento tem o símbolo 'O' na tabela periódica?",
+        "opcoes": [
+            "Ouro",
+            "Oxigênio",
+            "Osmônio",
+            "Óxido"
+        ],
+        "resposta": "Oxigênio"
+    },
+    {
+        "pergunta": "Quem escreveu 'Dom Quixote'?",
+        "opcoes": [
+            "Machado de Assis",
+            "Miguel de Cervantes",
+            "Fernando Pessoa",
+            "Eça de Queirós"
+        ],
+        "resposta": "Miguel de Cervantes"
+    },
+    {
+        "pergunta": "Em que continente fica o Egito?",
+        "opcoes": [
+            "Ásia",
+            "América",
+            "África",
+            "Europa"
+        ],
+        "resposta": "África"
+    }
+]

@@ -5,11 +5,13 @@
     border: none;
     background-color: #e34f00;
     color: #fff;
-    transition: .3s ease;
+    transition: transform .3s ease;
     font-size: 1.3em;
+    outline: none !important;
 }
 
 .btn:hover {
     background-color: #e05f1a;
+    transform: scale(1.05);
     cursor: pointer;
 }

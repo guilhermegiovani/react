@@ -1,23 +1,23 @@
 .container {
-    color: #fff;
+    color: #eeeded;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
-    height: 500px;
-    background-color: black;
+    height: 60vh;
 }
 
 .container h3 {
     font-size: 2em;
 }
 
-.container div {
+.results {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
     flex-direction: column;
-    background-color: blue;
+    padding: 20px;
+    height: 100%;
 }
 
 .container p {

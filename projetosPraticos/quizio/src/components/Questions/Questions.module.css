@@ -42,6 +42,13 @@
     padding: 10px 20px;
     font-size: 1.2em;
     font-weight: 500;
+    outline: none !important;
+    border: none;
+    transition: transform .3s ease-in-out;
+}
+
+.alternatives:hover {
+    transform: scale(1.1);
 }
 
 .alternative1,

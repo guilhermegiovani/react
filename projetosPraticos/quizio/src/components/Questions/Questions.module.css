@@ -8,18 +8,20 @@
 
 .question {
     background-color: #a5e489; /* A7F3D0 */ /* D1FAE5 */ /* daffbe */
-    height: 400px;
+    min-height: 300px;
     max-width: 300px;
     padding: 20px;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    gap: 15px;
     margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
 .question h3 {
-    font-size: 2em;
+    font-size: 1.8em;
     text-align: center;
 }
 

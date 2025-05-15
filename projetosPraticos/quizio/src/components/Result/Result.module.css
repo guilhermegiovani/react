@@ -1,23 +1,23 @@
-/* .container {
+.container {
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: column;
     height: 500px;
-    width: 400px;
-} */
+    background-color: black;
+}
 
-/* .container div {
-    height: 50%;
+.container h3 {
+    font-size: 2em;
+}
+
+.container div {
     display: flex;
     align-items: center;
     justify-content: end;
     flex-direction: column;
-}
-
-.container h3 {
-    font-size: 1.4em;
+    background-color: blue;
 }
 
 .container p {
@@ -27,4 +27,4 @@
 .container span {
     font-size: 2em;
     font-weight: bold;
-} */
+}

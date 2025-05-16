@@ -7,7 +7,10 @@
 }
 
 .question {
-    background-color: #a5e489; /* A7F3D0 */ /* D1FAE5 */ /* daffbe */
+    background-color: #a5e489;
+    /* A7F3D0 */
+    /* D1FAE5 */
+    /* daffbe */
     min-height: 300px;
     max-width: 300px;
     padding: 20px;
@@ -75,4 +78,20 @@
 
 .alternative4 {
     background-color: #ff5a28;
+}
+
+.correct {
+    background-color: #22c55e;
+    color: #fff;
+    border: 2px solid #16a34a;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
+}
+
+.incorrect {
+    background-color: #ef4444;
+    color: #fff;
+    border: 2px solid #b91c1c;
+    transform: scale(1.05);
+    transition: all 0.2s ease-in-out;
 }

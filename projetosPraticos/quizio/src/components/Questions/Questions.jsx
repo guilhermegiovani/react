@@ -4,7 +4,7 @@ import Background from "../Background/Background"
 import Button from "../Button/Button"
 import styles from "./Questions.module.css"
 import questions from "../../db.json"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 function Questions() {
@@ -22,22 +22,34 @@ function Questions() {
     const [pontuation, setPontuation] = useState(0)
     const question = questions[currentQuestionIndex]
 
-    const nextQuestion = () => {
+    const nextQuestion = (selected) => {
+        const isCorrect = selected === question.resposta
+        const newPontuation = isCorrect ? pontuation + 1 : pontuation
 
         if (currentQuestionIndex >= (questions.length - 1)) {
-            console.log(pontuation)
-            navigate("/result", { state: { pontuation} })
+            navigate("/result", { state: { newPontuation } })
         } else {
-            responseCorrect()
-            setCurrentQuestionIndex(currentQuestionIndex + 1)
+            if (isCorrect) setPontuation(newPontuation)
+            setCurrentQuestionIndex(prev => prev + 1)
+        setAlternative('')
         }
     }
 
-    const responseCorrect = (selected) => {
-        if(selected === question.resposta) {
-            setPontuation(pontuation + 1)
+    const [alternative, setAlternative] = useState()
+    const [correctOrIncorrect, setCorrectOrIncorrect] = useState()
+
+    useEffect(() => {
+        if (alternative) {
+            setCorrectOrIncorrect(alternative === question.resposta ? styles.correct : styles.incorrect)
         }
-    }
+    }, [alternative, question.resposta])
+
+
+    // const responseCorrect = (selected) => {
+    //     if(selected === question.resposta) {
+    //         setPontuation(prev => prev + 1)
+    //     }
+    // }
 
     return (
         <section className={styles.container}>
@@ -48,19 +60,29 @@ function Questions() {
                     {
                         question.opcoes.map((opcao, i) => (
                             <AlternativeButton
-                            handleClick={() => {
-                                responseCorrect(opcao)
-                                nextQuestion()
-                            }}
-                            key={i}
-                            alternative={opcao}
-                            className={`${styles.alternatives} ${colorsAlternatives[i]}`} />
+                                handleClick={() => {
+                                    // responseCorrect(opcao)
+                                    // nextQuestion(opcao)
+                                    setAlternative(opcao)
+                                }}
+                                key={i}
+                                alternative={opcao}
+                                className={`${styles.alternatives} ${colorsAlternatives[i]} ${alternative === opcao ? correctOrIncorrect : ''}`}
+                            />
                         ))
                     }
                 </div>
             </div>
 
-            <Button text="Próxima" />
+            {alternative !== '' && alternative !== undefined
+                ? <Button
+                    text={currentQuestionIndex >= (questions.length - 1) ? "Finalizar" : "Proxíma"}
+                    handleClick={() => {
+                        // responseCorrect(opcao)
+                        nextQuestion(alternative)
+                    }}
+                /> : ''
+            }
 
         </section>
     )

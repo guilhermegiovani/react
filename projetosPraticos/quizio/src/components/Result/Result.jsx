@@ -7,7 +7,7 @@ function Result() {
 
     const navigate = useNavigate()
     const location = useLocation()
-    const pontuantion = location.state?.pontuantion
+    const pontuation = location.state?.newPontuation
 
     const startOver = () => {
         navigate("/questions")
@@ -18,7 +18,7 @@ function Result() {
             <Background tema="result" />
             <div className={styles.results}>
                 <h3>Você pontuou</h3>
-                <p><span>{pontuantion ?? 0}</span> de <span>10</span></p>
+                <p><span>{pontuation ?? 0}</span> de <span>10</span></p>
             </div>
 
             <div className={styles.btn}>

@@ -1,10 +1,10 @@
 
 
-function AlternativeButton({ alternative, className, handleClick }) {
+function AlternativeButton({ alternative, className, handleClick, disable }) {
 
     return (
         <>
-            <button onClick={handleClick} className={className}>{alternative}</button>
+            <button disabled={disable} onClick={handleClick} className={className}>{alternative}</button>
         </>
     )
 }

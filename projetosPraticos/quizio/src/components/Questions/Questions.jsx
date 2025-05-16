@@ -31,24 +31,29 @@ function Questions() {
         } else {
             if (isCorrect) setPontuation(newPontuation)
             setCurrentQuestionIndex(prev => prev + 1)
-        setAlternative('')
+            setAlternative('')
+            setIsDisable(false)
         }
     }
 
     const [alternative, setAlternative] = useState()
     const [correctOrIncorrect, setCorrectOrIncorrect] = useState()
+    const [arrayNotSelected, setArrayNotSelected] = useState([])
+    const [isDisable, setIsDisable] = useState(false)
 
     useEffect(() => {
         if (alternative) {
             setCorrectOrIncorrect(alternative === question.resposta ? styles.correct : styles.incorrect)
+            // notSelect()
         }
     }, [alternative, question.resposta])
 
+    const checkNotSelected = (alt) => {
+        question.opcoes.filter((opc) => alt !== opc ? setArrayNotSelected(prev => [...prev, opc]) : '')
+    }
 
-    // const responseCorrect = (selected) => {
-    //     if(selected === question.resposta) {
-    //         setPontuation(prev => prev + 1)
-    //     }
+    // const notSelect = () => {
+    //     arrayNotSelected.map((alt) => {})
     // }
 
     return (
@@ -61,13 +66,14 @@ function Questions() {
                         question.opcoes.map((opcao, i) => (
                             <AlternativeButton
                                 handleClick={() => {
-                                    // responseCorrect(opcao)
-                                    // nextQuestion(opcao)
                                     setAlternative(opcao)
+                                    setIsDisable(true)
+                                    checkNotSelected(opcao)
                                 }}
                                 key={i}
                                 alternative={opcao}
                                 className={`${styles.alternatives} ${colorsAlternatives[i]} ${alternative === opcao ? correctOrIncorrect : ''}`}
+                                disable={isDisable}
                             />
                         ))
                     }

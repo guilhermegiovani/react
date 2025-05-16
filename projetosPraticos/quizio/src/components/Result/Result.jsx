@@ -1,11 +1,13 @@
 import Background from "../Background/Background"
 import Button from "../Button/Button"
 import styles from "./Result.module.css"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
 function Result() {
 
     const navigate = useNavigate()
+    const location = useLocation()
+    const pontuantion = location.state?.pontuantion
 
     const startOver = () => {
         navigate("/questions")
@@ -16,7 +18,7 @@ function Result() {
             <Background tema="result" />
             <div className={styles.results}>
                 <h3>Você pontuou</h3>
-                <p><span>3</span> de <span>10</span></p>
+                <p><span>{pontuantion ?? 0}</span> de <span>10</span></p>
             </div>
 
             <div className={styles.btn}>

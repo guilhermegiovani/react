@@ -23,10 +23,10 @@ function Questions() {
     const question = questions[currentQuestionIndex]
 
     const nextQuestion = () => {
-        currentQuestionIndex >= (questions.length - 1) ? navigate("/result") : setCurrentQuestionIndex(currentQuestionIndex + 1)
 
         if (currentQuestionIndex >= (questions.length - 1)) {
-            navigate("/result")
+            console.log(pontuation)
+            navigate("/result", { state: { pontuation} })
         } else {
             responseCorrect()
             setCurrentQuestionIndex(currentQuestionIndex + 1)

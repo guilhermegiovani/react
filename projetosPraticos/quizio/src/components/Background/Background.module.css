@@ -6,15 +6,15 @@
 }
 
 .background.start {
-    background-color:#6D28D9;
+    background-color: #6D28D9;
 }
 
 .background.quiz {
-    background-color:#059669;
+    background-color: #059669;
 }
 
 .background.result {
-    background-color:#2563EB;
+    background-color: #2563EB;
 }
 
 .littleBall {
@@ -24,15 +24,15 @@
 }
 
 .littleBall.start {
-    background-color:#A78BFA;
+    background-color: #A78BFA;
 }
 
 .littleBall.quiz {
-    background-color:#34D399;
+    background-color: #34D399;
 }
 
 .littleBall.result {
-    background-color:#A5F3FC;
+    background-color: #A5F3FC;
 }
 
 .littleBall1 {
@@ -89,4 +89,59 @@
     width: 100px;
     bottom: 220px;
     right: 430px;
+}
+
+@media (max-width: 768px) {
+
+    /* Tablet */
+    .littleBall3 {
+        top: 50px;
+        right: 50px;
+    }
+
+    .littleBall4 {
+        bottom: 0px;
+        left: -100px;
+    }
+
+    .littleBall5 {
+        top: 300px;
+        right: 450px;
+    }
+
+    .littleBall6 {
+        top: 400px;
+        left: 470px;
+    }
+
+    .littleBall7 {
+        bottom: 350px;
+        left: 470px;
+    }
+
+    .littleBall8 {
+        bottom: 400px;
+        right: 470px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    /* Celular */
+    .littleBall2 {
+        bottom: -120px;
+        right: -100px;
+    }
+
+    .littleBall3 {
+        top: 100px;
+        right: -50px;
+    }
+
+    .littleBall4 {
+        bottom: 250px;
+        left: -100px;
+    }
+
 }

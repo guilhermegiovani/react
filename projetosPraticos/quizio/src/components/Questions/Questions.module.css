@@ -97,6 +97,11 @@
 }
 
 .notSelected {
-    background-color: #000000a3;
-    color: #cacacaac;
+    opacity: 0.4;
+    transform: scale(0.95);
+    filter: brightness(0.8) grayscale(0.4);
+    box-shadow: none;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+
 }

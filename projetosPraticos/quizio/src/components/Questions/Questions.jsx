@@ -38,23 +38,13 @@ function Questions() {
 
     const [alternative, setAlternative] = useState()
     const [correctOrIncorrect, setCorrectOrIncorrect] = useState()
-    const [arrayNotSelected, setArrayNotSelected] = useState([])
     const [isDisable, setIsDisable] = useState(false)
 
     useEffect(() => {
         if (alternative) {
             setCorrectOrIncorrect(alternative === question.resposta ? styles.correct : styles.incorrect)
-            // notSelect()
         }
     }, [alternative, question.resposta])
-
-    const checkNotSelected = (alt) => {
-        question.opcoes.filter((opc) => alt !== opc ? setArrayNotSelected(prev => [...prev, opc]) : '')
-    }
-
-    // const notSelect = () => {
-    //     arrayNotSelected.map((alt) => {})
-    // }
 
     return (
         <section className={styles.container}>
@@ -68,11 +58,10 @@ function Questions() {
                                 handleClick={() => {
                                     setAlternative(opcao)
                                     setIsDisable(true)
-                                    checkNotSelected(opcao)
                                 }}
                                 key={i}
                                 alternative={opcao}
-                                className={`${styles.alternatives} ${colorsAlternatives[i]} ${alternative === opcao ? correctOrIncorrect : ''}`}
+                                className={`${styles.alternatives} ${colorsAlternatives[i]} ${alternative === opcao ? correctOrIncorrect : ''} ${alternative && alternative !== opcao ? styles.notSelected : ''}`}
                                 disable={isDisable}
                             />
                         ))

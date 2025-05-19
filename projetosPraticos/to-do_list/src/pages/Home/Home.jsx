@@ -5,8 +5,10 @@ function Home() {
 
     return (
         <section>
-            <h1>To do List</h1>
-            <TodoInput type="text" placeholder="Adicione uma tarefa..." />
+            <div>
+                <h1>To-do List</h1>
+                <TodoInput type="text" placeholder="Adicione uma tarefa..." />
+            </div>
         </section>
     )
 }

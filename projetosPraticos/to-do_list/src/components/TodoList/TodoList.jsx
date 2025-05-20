@@ -1,9 +1,11 @@
 import clsx from 'clsx'
 import Button from '../Button/Button'
+import { useContext } from 'react'
+import { TodoContext } from '../TodoContext/TodoContext'
 
 function TodoList() {
 
-    const tasks = ["Complete the Project", "Tarefa 2", "Tarefa 3", "Tarefa 4"]
+    const { tasks } = useContext(TodoContext)
 
     return (
         <section className={clsx(
@@ -11,13 +13,13 @@ function TodoList() {
             "rounded-lg",
             "px-0",
             "w-full max-w-xl mx-auto",
-            "border border-[#2c2d32]"
+            "border border-[#26272c]" // [#2c2d32] [#2f3035]
         )}
         >
-            <div className="flex flex-col divide-y divide-[#2f3035]">
-                {tasks.map((task, index) => (
+            <div className="flex flex-col divide-y divide-[#26272c]">
+                {tasks.map((task) => (
                     <div
-                        key={index}
+                        key={task.id}
                         className={clsx(
                             "flex justify-between items-center",
                             "text-white text-xl font-normal",
@@ -42,7 +44,7 @@ function TodoList() {
                                     "transition-all duration-150 cursor-pointer"
                                 )}
                             />
-                            <span>{task}</span>
+                            <span>{task.text}</span>
                         </div>
 
                         <Button

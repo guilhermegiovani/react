@@ -1,11 +1,19 @@
 import clsx from 'clsx'
 import Button from '../Button/Button'
-import { useContext } from 'react'
-import { TodoContext } from '../TodoContext/TodoContext'
+// import { useContext, useState } from 'react'
+import { TodoContext, useTodo } from '../TodoContext/TodoContext'
 
-function TodoList() {
+function TodoList({ displayTasks }) {
 
-    const { tasks } = useContext(TodoContext)
+    const { tasks, handleDelete, toggleCompleted } = useTodo()
+
+    let filteredTasks = tasks
+
+    if(displayTasks === "Pendentes") {
+        filteredTasks = tasks.filter(task => !task.completed)
+    } else if(displayTasks === "Concluidas") {
+        filteredTasks = tasks.filter(task => task.completed)
+    }
 
     return (
         <section className={clsx(
@@ -17,43 +25,50 @@ function TodoList() {
         )}
         >
             <div className="flex flex-col divide-y divide-[#26272c]">
-                {tasks.map((task) => (
-                    <div
-                        key={task.id}
-                        className={clsx(
-                            "flex justify-between items-center",
-                            "text-white text-xl font-normal",
-                            "px-4 py-3"
-                        )}
-                    >
-                        <div className="flex items-center gap-3">
-                            <input
-                                type="checkbox"
-                                className={clsx(
-                                    "w-6 h-6",
-                                    "appearance-none",
-                                    "rounded-full",
-                                    "border border-gray-600",
-                                    "grid place-items-center",
-                                    "leading-none",                          // reduz espaçamento vertical
-                                    "checked:border-gray-500",
-                                    "checked:before:content-['✓']",
-                                    "checked:before:text-gray-500",
-                                    "checked:before:font-bold",
-                                    "checked:before:text-[16px]",            // ajuste fino do tamanho
-                                    "transition-all duration-150 cursor-pointer"
-                                )}
+                {filteredTasks.map((task) => (
+                        <div
+                            key={task.id}
+                            className={clsx(
+                                "flex justify-between items-center",
+                                "text-white text-xl font-normal",
+                                "px-4 py-3"
+                            )}
+                        >
+                            <div className="flex items-center gap-3">
+                                <input
+                                    type="checkbox"
+                                    className={clsx(
+                                        "w-6 h-6",
+                                        "appearance-none",
+                                        "rounded-full",
+                                        "border border-gray-600",
+                                        "grid place-items-center",
+                                        "leading-none",                          // reduz espaçamento vertical
+                                        "checked:border-gray-500",
+                                        "checked:before:content-['✓']",
+                                        "checked:before:text-gray-500",
+                                        "checked:before:font-bold",
+                                        "checked:before:text-[16px]",            // ajuste fino do tamanho
+                                        "transition-all duration-150 cursor-pointer"
+                                    )}
+                                    checked={task.completed}
+                                    onChange={() => {
+                                        toggleCompleted(task.id)
+                                    }}
+                                />
+                                <span>{task.text}</span>
+                            </div>
+
+                            <Button
+                                text="Delete"
+                                className="text-red-400 font-normal hover:text-red-300 transition cursor-pointer text-xl"
+                                handleClick={() => {
+                                    handleDelete(task.id)
+                                }}
                             />
-                            <span>{task.text}</span>
+
                         </div>
-
-                        <Button
-                            text="Delete"
-                            className="text-red-400 font-normal hover:text-red-300 transition cursor-pointer text-xl"
-                        />
-
-                    </div>
-                ))}
+                    ))}
             </div>
         </section >
     )

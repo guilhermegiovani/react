@@ -1,10 +1,26 @@
 // import { useState } from "react"
+import { useState } from "react"
 import Button from "../../components/Button/Button"
 import TodoInput from "../../components/TodoInput/TodoInput"
 import TodoList from "../../components/TodoList/TodoList"
+import { useTodo } from "../../components/TodoContext/TodoContext"
 import clsx from 'clsx'
 
 function Home() {
+
+    const [displayTasks, setDisplayTasks] = useState("Todos")
+    const { clearTaskCompleted } = useTodo()
+
+    const getButtonClasses = (filter) => {
+        return clsx(
+            "px-3 py-2 text-lg font-normal transition cursor-pointer",
+            'rounded-lg',
+            displayTasks === filter
+                ? "bg-[#222327] text-white"
+                : "text-[#9ca3af] hover:bg-[#222327] hover:text-white"
+        );
+    };
+
 
 
     return (
@@ -28,7 +44,7 @@ function Home() {
                     placeholder="Adicione uma tarefa..."
                 />
 
-                <TodoList />
+                <TodoList displayTasks={displayTasks} />
 
                 <nav className="flex justify-between items-center mt-0">
                     <div className={clsx(
@@ -38,26 +54,26 @@ function Home() {
 
                         <Button
                             text="Todos"
-                            className={clsx(
-                                "px-3 py-1.5 text-lg font-normal text-[#9ca3af]",
-                                "hover:bg-[#222327] hover:text-white transition cursor-pointer"
-                            )}
+                            className={getButtonClasses("Todos")}
+                            handleClick={() => {
+                                setDisplayTasks("Todos")
+                            }}
                         />
 
                         <Button
                             text="Pendentes"
-                            className={clsx(
-                                "px-3 py-1.5 text-lg font-normal text-[#9ca3af]",
-                                "hover:bg-[#222327] hover:text-white transition cursor-pointer"
-                            )}
+                            className={getButtonClasses("Pendentes")}
+                            handleClick={() => {
+                                setDisplayTasks("Pendentes")
+                            }}
                         />
 
                         <Button
                             text="Concluídas"
-                            className={clsx(
-                                "px-3 py-1.5 text-lg font-normal text-[#9ca3af]",
-                                "hover:bg-[#222327] hover:text-white transition cursor-pointer"
-                            )}
+                            className={getButtonClasses("Concluidas")}
+                            handleClick={() => {
+                                setDisplayTasks("Concluidas")
+                            }}
                         />
                     </div>
 
@@ -71,6 +87,7 @@ function Home() {
                                 "text-[#9ca3af]",
                                 "hover:bg-[#222327] hover:text-white transition cursor-pointer"
                             )}
+                            handleClick={clearTaskCompleted}
                         />
                     </div>
                 </nav>

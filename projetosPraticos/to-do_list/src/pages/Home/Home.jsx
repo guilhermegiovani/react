@@ -13,9 +13,10 @@ function Home() {
 
     const getButtonClasses = (filter) => {
         return clsx(
-            "px-3 py-2 text-lg font-normal transition-all duration-300 cursor-pointer",
-            'rounded-lg',
-            "relative z-10",
+            "px-3 py-2 md:px-3 sm:px-3.5 text-base font-normal md:text-lg transition-all duration-300 cursor-pointer",
+            "", // flex-1 sm:flex-none
+            "rounded-lg flex-shrink-0 whitespace-nowrap",
+            "text-center",
             displayTasks === filter
                 ? "bg-[#222327] text-white"
                 : "text-[#9ca3af] hover:bg-[#222327] hover:text-white"
@@ -26,7 +27,7 @@ function Home() {
 
     return (
         <section className={clsx(
-            'min-h-screen flex items-center justify-center px-4'
+            'min-h-screen flex items-center justify-center px-4 py-10'
         )}>
             <div className={clsx(
                 'w-full max-w-xl',
@@ -47,9 +48,11 @@ function Home() {
 
                 <TodoList displayTasks={displayTasks} />
 
-                <nav className="flex justify-between items-center mt-0">
+                <nav className="flex flex-col sm:flex-row sm:justify-between sm:items-center md:flex-row md:justify-between md:items-center gap-4">
                     <div className={clsx(
-                        "inline-flex overflow-hidden rounded-lg",
+                        "flex justify-center", // flex-wrap justify-center md:flex-nowrap
+                        "",
+                        "overflow-hidden rounded-lg",
                         "bg-[#1c1d22] border border-[#26272c]"
                     )}>
 
@@ -82,7 +85,8 @@ function Home() {
                         <Button
                             text="Limpar Concluídas"
                             className={clsx(
-                                "px-3 py-2 text-lg transition",
+                                "w-full md:w-auto",
+                                "px-3 py-2 sm:px-4 text-base md:text-lg transition",
                                 "rounded-lg",
                                 "bg-[#1c1d22] border border-[#26272c]",
                                 "text-[#9ca3af]",

@@ -13,8 +13,9 @@ function Home() {
 
     const getButtonClasses = (filter) => {
         return clsx(
-            "px-3 py-2 text-lg font-normal transition cursor-pointer",
+            "px-3 py-2 text-lg font-normal transition-all duration-300 cursor-pointer",
             'rounded-lg',
+            "relative z-10",
             displayTasks === filter
                 ? "bg-[#222327] text-white"
                 : "text-[#9ca3af] hover:bg-[#222327] hover:text-white"

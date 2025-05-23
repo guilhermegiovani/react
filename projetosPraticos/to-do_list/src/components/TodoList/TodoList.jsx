@@ -26,7 +26,8 @@ function TodoList({ displayTasks }) {
         >
             <div className={clsx(
                 "flex flex-col divide-y divide-[#26272c]",
-                "max-h-64 md:max-h-80 overflow-y-auto pr-1"
+                "max-h-64 md:max-h-80 overflow-y-auto pr-1",
+                "scrollbar-thin scrollbar-thumb-[#3b5bdb] scrollbar-track-[#1c1d22]"
             )}>
                 {filteredTasks.map((task) => (
                         <div
@@ -46,12 +47,12 @@ function TodoList({ displayTasks }) {
                                         "rounded-full",
                                         "border border-gray-600",
                                         "grid place-items-center",
-                                        "leading-none",                          // reduz espaçamento vertical
+                                        "leading-none",  // reduz espaçamento vertical
                                         "checked:border-gray-500",
                                         "checked:before:content-['✓']",
                                         "checked:before:text-gray-500",
                                         "checked:before:font-bold",
-                                        "checked:before:text-[14px] md:checked:before:text-[16px]",            // ajuste fino do tamanho
+                                        "checked:before:text-[14px] md:checked:before:text-[16px]", // ajuste fino do tamanho
                                         "transition-all duration-150 cursor-pointer"
                                     )}
                                     checked={task.completed}

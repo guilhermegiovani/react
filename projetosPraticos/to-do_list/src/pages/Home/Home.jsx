@@ -13,10 +13,9 @@ function Home() {
 
     const getButtonClasses = (filter) => {
         return clsx(
-            "px-3 py-2 md:px-3 sm:px-3.5 text-base font-normal md:text-lg transition-all duration-300 cursor-pointer",
-            "", // flex-1 sm:flex-none
-            "rounded-lg flex-shrink-0 whitespace-nowrap",
-            "text-center",
+            "py-2 md:px-3 sm:px-3.5 text-base font-normal md:text-lg transition-all duration-300 cursor-pointer",
+            "flex-1 justify-center", // flex-1 sm:flex-none basis-1/3 flex justify-center items-center
+            "rounded-lg", // flex-shrink-0 whitespace-nowrap
             displayTasks === filter
                 ? "bg-[#222327] text-white"
                 : "text-[#9ca3af] hover:bg-[#222327] hover:text-white"

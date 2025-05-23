@@ -29,7 +29,6 @@ export function TodoProvider({ children }) {
     const handleDelete = (id) => {
         const newArray = tasks.filter((task) => task.id !== id)
         setTasks(newArray)
-        console.log("Deletado")
     }
 
     const toggleCompleted = (id) => {

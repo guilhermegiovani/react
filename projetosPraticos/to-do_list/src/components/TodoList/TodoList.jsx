@@ -26,15 +26,15 @@ function TodoList({ displayTasks }) {
         >
             <div className={clsx(
                 "flex flex-col divide-y divide-[#26272c]",
-                "max-h-64 md:max-h-80 overflow-y-auto pr-1",
-                "scrollbar-thin scrollbar-thumb-[#3b5bdb] scrollbar-track-[#1c1d22]"
+                "max-h-64 md:max-h-72",
+                "overflow-y-auto"
             )}>
                 {filteredTasks.map((task) => (
                         <div
                             key={task.id}
                             className={clsx(
                                 "flex justify-between items-center",
-                                "text-white text-xl font-normal",
+                                "text-white text-lg md:text-xl font-normal",
                                 "px-4 py-3"
                             )}
                         >

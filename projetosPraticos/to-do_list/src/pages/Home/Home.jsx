@@ -13,11 +13,12 @@ function Home() {
 
     const getButtonClasses = (filter) => {
         return clsx(
-            "py-2 md:px-3 sm:px-3.5 text-base font-normal md:text-lg transition-all duration-300 cursor-pointer",
-            "flex-1 justify-center", // flex-1 sm:flex-none basis-1/3 flex justify-center items-center
+            "px-3 py-2 text-base font-normal md:text-lg transition-all duration-300 cursor-pointer",
+            "flex justify-center",
+            "w-full sm:w-auto",
             "rounded-lg", // flex-shrink-0 whitespace-nowrap
             displayTasks === filter
-                ? "bg-[#222327] text-white"
+                ? "bg-[#222327] text-white ring-1 ring-blue-500" // ring-1 ring-blue-500
                 : "text-[#9ca3af] hover:bg-[#222327] hover:text-white"
         );
     };
@@ -49,9 +50,8 @@ function Home() {
 
                 <nav className="flex flex-col sm:flex-row sm:justify-between sm:items-center md:flex-row md:justify-between md:items-center gap-4">
                     <div className={clsx(
-                        "flex justify-center", // flex-wrap justify-center md:flex-nowrap
-                        "",
-                        "overflow-hidden rounded-lg",
+                        "flex justify-center",
+                        "rounded-lg", // overflow-hidden
                         "bg-[#1c1d22] border border-[#26272c]"
                     )}>
 
@@ -85,7 +85,8 @@ function Home() {
                             text="Limpar Concluídas"
                             className={clsx(
                                 "w-full md:w-auto",
-                                "px-3 py-2 sm:px-4 text-base md:text-lg transition",
+                                "whitespace-nowrap",
+                                "px-3 py-2 text-base md:text-lg transition",
                                 "rounded-lg",
                                 "bg-[#1c1d22] border border-[#26272c]",
                                 "text-[#9ca3af]",

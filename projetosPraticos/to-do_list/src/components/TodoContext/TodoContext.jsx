@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react"
+import { v4 as uuidv4 } from 'uuid';
 
 export const TodoContext = createContext()
 
@@ -21,7 +22,7 @@ export function TodoProvider({ children }) {
     }, [tasks])
 
     function addTask(taskText) {
-        const newTask = { id: Date.now(), text: taskText, completed: false }
+        const newTask = { id: uuidv4(), text: taskText, completed: false, isEditing: false }
 
         setTasks(prev => [...prev, newTask])
     }
@@ -43,8 +44,25 @@ export function TodoProvider({ children }) {
         setTasks(tasksCompleted)
     }
 
+    // const [textEdited, setTextEdited] = useState()
+
+    const editTask = (id, isEditing) => {
+        const taskEditing = tasks.map((task) => 
+            task.id === id ? { ...task, isEditing } : task)
+        setTasks(taskEditing)
+    }
+
+    const handleChangeText = (id, textEdit) => {
+        const changeText = tasks.map((task) => task.id === id ? {...task , text: textEdit} : task)
+        setTasks(changeText)
+    }
+
+    // const saveEdit = () => {
+
+    // }
+
     return (
-        <TodoContext.Provider value={{ tasks, addTask, handleDelete, toggleCompleted, clearTaskCompleted }}>
+        <TodoContext.Provider value={{ tasks, addTask, handleDelete, toggleCompleted, clearTaskCompleted, editTask, handleChangeText }}>
             {children}
         </TodoContext.Provider>
     )

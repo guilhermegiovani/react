@@ -5,7 +5,7 @@ import { TodoContext, useTodo } from '../TodoContext/TodoContext'
 
 function TodoList({ displayTasks }) {
 
-    const { tasks, handleDelete, toggleCompleted, editTask, handleChangeText } = useTodo()
+    const { tasks, handleDelete, toggleCompleted, editTask, handleChangeText, cancelEdit } = useTodo()
 
     let filteredTasks = tasks
 
@@ -69,7 +69,7 @@ function TodoList({ displayTasks }) {
                                 <input
                                     value={task.text}
                                     onChange={(e) => handleChangeText(task.id, e.target.value)}
-                                    onBlur={() => editTask(task.id, false)}
+                                    // onBlur={() => editTask(task.id, false)}
                                     onKeyDown={(e) => {
                                         if(e.key === "Enter") {
                                             editTask(task.id, false)
@@ -90,10 +90,10 @@ function TodoList({ displayTasks }) {
                         </div>
 
                         <Button
-                            text="Delete"
+                            text={task.isEditing ? "Cancelar Edição" : "Delete"}
                             className="text-red-400 font-normal hover:text-red-300 transition cursor-pointer text-lg md:text-xl"
                             handleClick={() => {
-                                handleDelete(task.id)
+                                task.isEditing ? cancelEdit(task.id) : handleDelete(task.id)
                             }}
                         />
 

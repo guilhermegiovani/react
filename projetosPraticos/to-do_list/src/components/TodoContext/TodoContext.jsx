@@ -47,22 +47,49 @@ export function TodoProvider({ children }) {
     // const [textEdited, setTextEdited] = useState()
 
     const editTask = (id, isEditing) => {
-        const taskEditing = tasks.map((task) => 
-            task.id === id ? { ...task, isEditing } : task)
+
+        // const taskEditing = tasks.map((task) =>
+        //     task.id === id ? {
+        //         ...task,
+        //         isEditing,
+        //         originalText: isEditing && task.originalText === undefined ? task.text : task.originalText
+        //     } : task)
+
+        const taskEditing = tasks.map((task) => {
+
+            if (task.id === id) {
+                return {
+                    ...task,
+                    isEditing,
+                    originalText: isEditing && task.originalText === undefined ? task.text : task.originalText
+                };
+            }
+            return task
+        })
+
         setTasks(taskEditing)
     }
 
     const handleChangeText = (id, textEdit) => {
-        const changeText = tasks.map((task) => task.id === id ? {...task , text: textEdit} : task)
+        const changeText = tasks.map((task) =>
+            task.id === id ? { ...task, text: textEdit } : task)
         setTasks(changeText)
     }
 
-    // const saveEdit = () => {
+    const cancelEdit = (id) => {
+        const cancelEditText = tasks.map((task) =>
+            task.id === id ? {
+                ...task,
+                text: task.originalText,
+                isEditing: false,
+                originalText: undefined
+            } : task)
 
-    // }
+        setTasks(cancelEditText)
+    }
 
     return (
-        <TodoContext.Provider value={{ tasks, addTask, handleDelete, toggleCompleted, clearTaskCompleted, editTask, handleChangeText }}>
+        <TodoContext.Provider value={{ tasks, addTask, handleDelete, toggleCompleted, clearTaskCompleted, editTask, handleChangeText, cancelEdit }}>
             {children}
         </TodoContext.Provider>
     )

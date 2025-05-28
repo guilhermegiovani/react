@@ -7,27 +7,60 @@ function DisplayTransactions() {
     const valueTransaction = ["6.700,00", "1.500,00", "850,00",]
 
     return (
-        <section>
+        <section
+            className={clsx(
+                "bg-white",
+                "p-3",
+                "rounded-xl",
+                "shadow-md",
+                "max-w-xl",
+                "mx-auto",
+                "mt-2"
+            )}
+        >
 
-            <div>
-                <div>
+            <div
+                className={clsx(
+                    "flex justify-evenly text-center text-lg mb-4"
+                )}
+            >
+                <div
+                    className={clsx(
+                        "bg-green-300",
+                        "p-3",
+                        "rounded-xl",
+                        "text-lg"
+                    )}
+                >
                     <p>Receitas</p>
                     <p>R$ 9.000,00</p>
                 </div>
 
-                <div>
+                <div
+                    className={clsx(
+                        "bg-red-300",
+                        "p-3",
+                        "rounded-xl"
+                    )}
+                >
                     <p>Despesas</p>
                     <p>R$ 6.200,00</p>
                 </div>
 
-                <div>
+                <div
+                    className={clsx(
+                        "bg-blue-300",
+                        "p-3",
+                        "rounded-xl"
+                    )}
+                >
                     <p>Saldo</p>
                     <p>R$ 2.800,00</p>
                 </div>
             </div>
 
             <div>
-                <nav>
+                <nav className="flex gap-10 text-lg border-b">
                     <Button text="Todas" />
 
                     <Button text="Receitas" />
@@ -36,9 +69,9 @@ function DisplayTransactions() {
                 </nav>
 
                 {nameTransaction.map((name, index) => (
-                    <div>
+                    <div className="border-b p-4 flex justify-between">
                         <p>{name}</p>
-                        <p>{valueTransaction[index]}</p>
+                        <p>R$ {valueTransaction[index]}</p>
                     </div>
                 ))
 

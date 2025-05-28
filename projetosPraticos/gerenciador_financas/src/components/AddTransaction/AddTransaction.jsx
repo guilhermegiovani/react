@@ -36,7 +36,7 @@ function AddTransaction() {
                 <div className={clsx("flex", "gap-4")}>
                     <Input
                         type="number"
-                        placeholder="Valo em R$"
+                        placeholder="Valor em R$"
                         step="0.01"
                         className={clsx(
                             "w-1/2",

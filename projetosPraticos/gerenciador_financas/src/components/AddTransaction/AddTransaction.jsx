@@ -12,8 +12,8 @@ function AddTransaction() {
                 "rounded-xl",
                 "shadow-md",
                 "w-full",
-                "max-w-xl",
-                "mx-auto"
+                "max-w-lg",
+                "mx-auto mb-5"
             )}
         >
             <h2 className={clsx("text-xl", "font-semibold", "mb-2")}>

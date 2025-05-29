@@ -15,10 +15,6 @@ function TodoList({ displayTasks }) {
         filteredTasks = tasks.filter(task => task.completed)
     }
 
-    // function editing() {
-    //     task.isEditing === false ? <span>{task.text}</span> : <input value={task.text}  />
-    // }
-
     return (
         <section className={clsx(
             "bg-[#1c1d22]",

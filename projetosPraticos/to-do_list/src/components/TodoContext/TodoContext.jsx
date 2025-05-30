@@ -44,16 +44,7 @@ export function TodoProvider({ children }) {
         setTasks(tasksCompleted)
     }
 
-    // const [textEdited, setTextEdited] = useState()
-
     const editTask = (id, isEditing) => {
-
-        // const taskEditing = tasks.map((task) =>
-        //     task.id === id ? {
-        //         ...task,
-        //         isEditing,
-        //         originalText: isEditing && task.originalText === undefined ? task.text : task.originalText
-        //     } : task)
 
         const taskEditing = tasks.map((task) => {
 

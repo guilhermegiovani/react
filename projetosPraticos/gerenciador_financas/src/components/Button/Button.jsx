@@ -1,9 +1,15 @@
+import { forwardRef } from "react"
 
-function Button({text, handleClick, className}) {
-
+const Button = forwardRef(function Button({ text, className, handleClick }, ref) {
     return (
-        <button onClick={handleClick} className={className}>{text}</button>
+        <button
+            ref={ref}
+            onClick={handleClick}
+            className={className}
+        >
+            {text}
+        </button>
     )
-}
+})
 
 export default Button

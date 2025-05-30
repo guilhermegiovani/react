@@ -66,8 +66,8 @@ function AddTransaction() {
                     <Button
                         text="Adicionar"
                         className={clsx(
-                            "bg-red-500 text-white font-medium px-4 py-2 rounded-md",
-                            "hover:bg-red-600 transition-colors duration-200 ease-in-out cursor-pointer"
+                            "bg-red-600 text-white font-medium px-5 py-2 rounded-md",
+                            "hover:bg-red-500 transition-colors duration-200 ease-in-out cursor-pointer"
                         )}
                     />
                 </div>

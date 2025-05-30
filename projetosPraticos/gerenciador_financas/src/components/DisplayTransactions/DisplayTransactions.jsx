@@ -2,23 +2,50 @@ import { clsx } from "clsx"
 import Button from "../Button/Button"
 import { DollarSign, ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { Trash } from 'phosphor-react'
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function DisplayTransactions() {
 
     const nameTransaction = ["Salário", "Aluguel", "Mercado"]
     const valueTransaction = ["6.700,00", "1.500,00", "850,00",]
 
-    const [displayTransaction, setDisplayTransaction] = useState("")
+    const todasRef = useRef(null)
+    const receitasRef = useRef(null)
+    const despesasRef = useRef(null)
 
-    const getButtonClasses = (filter) => {
+    const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+
+
+    const [displayTransaction, setDisplayTransaction] = useState("Todas")
+
+    useEffect(() => {
+
+        const refs = {
+            Todas: todasRef,
+            Receitas: receitasRef,
+            Despesas: despesasRef
+        }
+
+        const activeRef = refs[displayTransaction]
+        if (activeRef?.current) {
+            const { offsetLeft, offsetWidth } = activeRef.current
+            setIndicatorStyle({ left: offsetLeft, width: offsetWidth })
+        }
+
+    }, [displayTransaction])
+
+    const getButtonClasses = () => {
         return clsx(
-            "cursor-pointer transition-colors",
-            displayTransaction === filter
-                ? "border-b border-purple-700 text-purple-700"
-                : ""
+            "cursor-pointer transition-colors duration-300",
+            "px-3 mb-1"
         )
     }
+
+    const getCardsClasses = clsx(
+        "text-lg font-semibold",
+        "rounded-2xl p-2 shadow",
+        "flex flex-col items-center"
+    )
 
     return (
 
@@ -26,27 +53,36 @@ function DisplayTransactions() {
             {/* Cards de Resumo */}
             <div className="grid grid-cols-3 gap-4">
 
-                <div className="bg-green-100 rounded-2xl p-2 shadow flex flex-col items-center">
+                <div className={clsx(
+                    getCardsClasses,
+                    "bg-green-100"
+                )} >
 
                     <ArrowUpRight className="text-green-600 w-10 h-10" />
-                    <p className="text-lg font-semibold">Entradas</p>
-                    <p className="text-lg text-green-700 font-bold">R$ 9.000,00</p>
+                    <p>Entradas</p>
+                    <p className="text-lg text-green-700">R$ 9.000,00</p>
 
                 </div>
 
-                <div className="bg-red-100 rounded-2xl p-2 shadow flex flex-col items-center">
+                <div className={clsx(
+                    "bg-red-100",
+                    getCardsClasses
+                )}>
 
                     <ArrowDownRight className="text-red-600 w-10 h-10" />
-                    <p className="text-lg font-semibold">Saídas</p>
-                    <p className="text-lg text-red-700 font-bold">R$ 6.200,00</p>
+                    <p>Saídas</p>
+                    <p className="text-red-700">R$ 6.200,00</p>
 
                 </div>
 
-                <div className="bg-blue-100 rounded-2xl p-2 shadow flex flex-col items-center">
+                <div className={clsx(
+                    "bg-blue-100",
+                    getCardsClasses
+                )}>
 
                     <DollarSign className="text-blue-600 w-9 h-9" />
-                    <p className="text-lg font-semibold">Saldo</p>
-                    <p className="text-lg text-blue-700 font-bold">R$ 2.800,00</p>
+                    <p>Saldo</p>
+                    <p className="text-blue-700">R$ 2.800,00</p>
 
                 </div>
 
@@ -54,11 +90,14 @@ function DisplayTransactions() {
 
             {/* Filtros */}
             <nav className={clsx(
-                "flex gap-10 text-base font-semibold text-gray-600",
-                "border-b border-gray-300 pl-2 mb-4" // border-b border-gray-300 pl-2 mb-4
+                "relative flex gap-3 font-semibold text-gray-500",
+                "border-b border-gray-300 mb-4" // border-b border-gray-300 pl-2 mb-4
             )}>
+
+
                 <Button
                     text="Todas"
+                    ref={todasRef}
                     className={getButtonClasses("Todas")}
                     handleClick={() => {
                         setDisplayTransaction("Todas")
@@ -67,6 +106,7 @@ function DisplayTransactions() {
 
                 <Button
                     text="Receitas"
+                    ref={receitasRef}
                     className={getButtonClasses("Receitas")}
                     handleClick={() => {
                         setDisplayTransaction("Receitas")
@@ -75,11 +115,21 @@ function DisplayTransactions() {
 
                 <Button
                     text="Despesas"
+                    ref={despesasRef}
                     className={getButtonClasses("Despesas")}
                     handleClick={() => {
                         setDisplayTransaction("Despesas")
                     }}
                 />
+
+                <span
+                    className="absolute bottom-0 h-[1px] bg-purple-600 transition-all duration-300"
+                    style={{
+                        left: indicatorStyle.left,
+                        width: indicatorStyle.width,
+                    }}
+                />
+
             </nav>
 
             {/* Lista de Transações */}
@@ -90,8 +140,8 @@ function DisplayTransactions() {
                         className="flex justify-between items-center border-b border-gray-300 pb-3"
                     >
                         <div>
-                            <p className="text-lg font-semibold text-gray-800">{name}</p>
-                            <p className="text-sm text-gray-600">10/04/2024</p>
+                            <p className="text-base font-semibold text-gray-800">{name}</p>
+                            <p className="text-[12px] text-gray-600">10/04/2024</p>
                         </div>
 
                         <div className="flex gap-4">

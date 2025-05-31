@@ -13,11 +13,13 @@ function AddTransaction() {
     const [type, setType] = useState("")
 
     const handleSubmit = () => {
-        console.log("description:", description)
-        console.log("value:", value)
-        console.log("type:", type)
+        // console.log("description:", description)
+        // console.log("value:", value)
+        // console.log("type:", type)
 
         if (description.trim() === "") return
+        if(value === "") return
+        if(type === "") return
 
         addTransaction(description.trim(), value, type)
         setDescription("")
@@ -99,7 +101,6 @@ function AddTransaction() {
                         )}
                         handleClick={(e) => {
                             e.preventDefault()
-                            console.log("handleSubmit é:", handleSubmit)
                             handleSubmit()
                         }}
                     />

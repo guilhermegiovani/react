@@ -3,18 +3,20 @@ import Button from "../Button/Button"
 import { DollarSign, ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { Trash } from 'phosphor-react'
 import { useEffect, useRef, useState } from "react"
+import { useTransaction } from "../TransactionContext/TransactionContext"
 
 function DisplayTransactions() {
 
-    const nameTransaction = ["Salário", "Aluguel", "Mercado"]
-    const valueTransaction = ["6.700,00", "1.500,00", "850,00",]
+    const { transactions, deleteTransaction, calculateExpenses } = useTransaction()
+
+    const [expenses, setExpenses] = useState(0)
+    const [revenues, setRevenues] = useState(0)
 
     const todasRef = useRef(null)
     const receitasRef = useRef(null)
     const despesasRef = useRef(null)
 
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
-
 
     const [displayTransaction, setDisplayTransaction] = useState("Todas")
 
@@ -86,6 +88,15 @@ function DisplayTransactions() {
 
                 </div>
 
+                <Button
+                    text="Testar"
+                    className={clsx(
+                        "bg-red-600 text-white font-medium px-5 py-2 rounded-md",
+                        "hover:bg-red-500 transition-colors duration-200 ease-in-out cursor-pointer"
+                    )}
+                    handleClick={() => calculateExpenses()}
+                    />
+
             </div>
 
             {/* Filtros */}
@@ -134,30 +145,38 @@ function DisplayTransactions() {
 
             {/* Lista de Transações */}
             <div className="space-y-3">
-                {nameTransaction.map((name, index) => (
+                {transactions.map((transaction) => (
                     <div
-                        key={index}
+                        key={transaction.id}
                         className="flex justify-between items-center border-b border-gray-300 pb-3"
                     >
                         <div>
-                            <p className="text-base font-semibold text-gray-800">{name}</p>
-                            <p className="text-[12px] text-gray-600">10/04/2024</p>
+                            <p className="text-base font-semibold text-gray-800">{transaction.descricao}</p>
+                            <p className="text-[12px] text-gray-600">{transaction.data}</p>
                         </div>
 
                         <div className="flex gap-4">
                             <p
                                 className={clsx(
-                                    "font-bold",
-                                    index === 0
+                                    "font-semibold",
+                                    transaction.tipo === "Receita"
                                         ? "text-green-600"
                                         : "text-red-600"
                                 )}
                             >
-                                R$ {valueTransaction[index]}
+                                R$ {transaction.valor}
                             </p>
-                            <button>
+                            {/* <button>
                                 <Trash size={25} weight="fill" className="text-gray-500 hover:text-red-500 transition cursor-pointer" />
-                            </button>
+                            </button> */}
+                            <Button
+                                text={
+                                    <Trash size={25} weight="fill"
+                                        className="text-gray-500 hover:text-red-500 transition cursor-pointer"
+                                    />
+                                }
+                                handleClick={() => deleteTransaction(transaction.id)}
+                            />
                         </div>
 
                     </div>

@@ -1,5 +1,6 @@
 import { clsx } from "clsx"
 import Button from "../Button/Button"
+import Card from "../Card/Card"
 import { DollarSign, ArrowUpRight, ArrowDownRight } from "lucide-react"
 import { Trash } from 'phosphor-react'
 import { useEffect, useRef, useState } from "react"
@@ -44,9 +45,9 @@ function DisplayTransactions() {
 
     let filteredTransactions = transactions
 
-    if(displayTransaction === "Receitas") {
+    if (displayTransaction === "Receitas") {
         filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Receita")
-    } else if(displayTransaction === "Despesas") {
+    } else if (displayTransaction === "Despesas") {
         filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Despesa")
     }
 
@@ -68,40 +69,38 @@ function DisplayTransactions() {
         <section className="space-y-6 px-6 pt-4 max-w-lg mx-auto bg-white shadow-md rounded-xl mb-10">
             {/* Cards de Resumo */}
             <div className="grid grid-cols-3 gap-4">
+                <Card
+                    title="Receitas"
+                    value={totalRevenues}
+                    icon={<ArrowUpRight className="text-green-600 w-10 h-10" />}
+                    className={clsx(
+                        getCardsClasses,
+                        "bg-green-100")
+                    }
+                    colorFont="text-lg text-green-700"
+                />
 
-                <div className={clsx(
-                    getCardsClasses,
-                    "bg-green-100"
-                )} >
+                <Card
+                    title="Despesas"
+                    value={totalExpenses}
+                    icon={<ArrowDownRight className="text-red-600 w-10 h-10" />}
+                    className={clsx(
+                        getCardsClasses,
+                        "bg-red-100")
+                    }
+                    colorFont="text-lg text-red-700"
+                />
 
-                    <ArrowUpRight className="text-green-600 w-10 h-10" />
-                    <p>Receitas</p>
-                    <p className="text-lg text-green-700">{totalRevenues}</p>
-
-                </div>
-
-                <div className={clsx(
-                    "bg-red-100",
-                    getCardsClasses
-                )}>
-
-                    <ArrowDownRight className="text-red-600 w-10 h-10" />
-                    <p>Despesas</p>
-                    <p className="text-red-700">{totalExpenses}</p>
-
-                </div>
-
-                <div className={clsx(
-                    "bg-blue-100",
-                    getCardsClasses
-                )}>
-
-                    <DollarSign className="text-blue-600 w-9 h-9" />
-                    <p>Saldo</p>
-                    <p className="text-blue-700">{totalBalance()}</p>
-
-                </div>
-
+                <Card
+                    title="Saldo"
+                    value={totalBalance()}
+                    icon={<DollarSign className="text-blue-600 w-9 h-9" />}
+                    className={clsx(
+                        getCardsClasses,
+                        "bg-blue-100")
+                    }
+                    colorFont="text-lg text-blue-700"
+                />
             </div>
 
             {/* Filtros */}

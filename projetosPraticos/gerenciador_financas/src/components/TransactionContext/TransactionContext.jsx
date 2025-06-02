@@ -12,6 +12,9 @@ export function TransactionProvider({ children }) {
     })
 
     useEffect(() => {
+        calculateExpenses()
+        calculateRevenues()
+
         localStorage.setItem("transactions", JSON.stringify(transactions))
     }, [transactions])
 
@@ -36,19 +39,27 @@ export function TransactionProvider({ children }) {
 
     const calculateExpenses = () => {
         const getExpenses = transactions.filter((transaction) => transaction.tipo === "Despesa")
+        const totalExpenses = getExpenses.reduce((acumulador, expensesAtual) => {
+            return acumulador + expensesAtual.valor
+        }, 0)
 
-        for(let i = 0; i < getExpenses.length; i++) {
-            setExpenses(expenses + getExpenses[i].valor)
-        }
-
-        console.log(expenses)
+        setExpenses(totalExpenses)
     }
 
-    const calculateRevenues = () => {}
+    const [revenues, setRevenues] = useState(0)
+
+    const calculateRevenues = () => {
+        const getRevenues = transactions.filter((transaction) => transaction.tipo === "Receita")
+        const totalRevenues = getRevenues.reduce((acumulador, revenuesAtual) => {
+            return acumulador + revenuesAtual.valor
+        }, 0)
+
+        setRevenues(totalRevenues)
+    }
 
     return (
         <TransactionContext.Provider
-            value={{ transactions, addTransaction, deleteTransaction, calculateExpenses, calculateRevenues }}
+            value={{ transactions, addTransaction, deleteTransaction, expenses, revenues }}
         >
             {children}
         </TransactionContext.Provider>

@@ -7,10 +7,16 @@ import { useTransaction } from "../TransactionContext/TransactionContext"
 
 function DisplayTransactions() {
 
-    const { transactions, deleteTransaction, calculateExpenses } = useTransaction()
+    const { transactions, deleteTransaction, expenses, revenues } = useTransaction()
 
-    const [expenses, setExpenses] = useState(0)
-    const [revenues, setRevenues] = useState(0)
+    // const [expenses, setExpenses] = useState(0)
+    // const [revenues, setRevenues] = useState(0)
+    const totalExpenses = expenses.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    const totalRevenues = revenues.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    const totalBalance = () => {
+        const balance = revenues - expenses
+        return balance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    }
 
     const todasRef = useRef(null)
     const receitasRef = useRef(null)
@@ -35,6 +41,14 @@ function DisplayTransactions() {
         }
 
     }, [displayTransaction])
+
+    let filteredTransactions = transactions
+
+    if(displayTransaction === "Receitas") {
+        filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Receita")
+    } else if(displayTransaction === "Despesas") {
+        filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Despesa")
+    }
 
     const getButtonClasses = () => {
         return clsx(
@@ -61,8 +75,8 @@ function DisplayTransactions() {
                 )} >
 
                     <ArrowUpRight className="text-green-600 w-10 h-10" />
-                    <p>Entradas</p>
-                    <p className="text-lg text-green-700">R$ 9.000,00</p>
+                    <p>Receitas</p>
+                    <p className="text-lg text-green-700">{totalRevenues}</p>
 
                 </div>
 
@@ -72,8 +86,8 @@ function DisplayTransactions() {
                 )}>
 
                     <ArrowDownRight className="text-red-600 w-10 h-10" />
-                    <p>Saídas</p>
-                    <p className="text-red-700">R$ 6.200,00</p>
+                    <p>Despesas</p>
+                    <p className="text-red-700">{totalExpenses}</p>
 
                 </div>
 
@@ -84,18 +98,9 @@ function DisplayTransactions() {
 
                     <DollarSign className="text-blue-600 w-9 h-9" />
                     <p>Saldo</p>
-                    <p className="text-blue-700">R$ 2.800,00</p>
+                    <p className="text-blue-700">{totalBalance()}</p>
 
                 </div>
-
-                <Button
-                    text="Testar"
-                    className={clsx(
-                        "bg-red-600 text-white font-medium px-5 py-2 rounded-md",
-                        "hover:bg-red-500 transition-colors duration-200 ease-in-out cursor-pointer"
-                    )}
-                    handleClick={() => calculateExpenses()}
-                    />
 
             </div>
 
@@ -145,7 +150,7 @@ function DisplayTransactions() {
 
             {/* Lista de Transações */}
             <div className="space-y-3">
-                {transactions.map((transaction) => (
+                {filteredTransactions.map((transaction) => (
                     <div
                         key={transaction.id}
                         className="flex justify-between items-center border-b border-gray-300 pb-3"
@@ -164,7 +169,7 @@ function DisplayTransactions() {
                                         : "text-red-600"
                                 )}
                             >
-                                R$ {transaction.valor}
+                                {transaction.valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })}
                             </p>
                             {/* <button>
                                 <Trash size={25} weight="fill" className="text-gray-500 hover:text-red-500 transition cursor-pointer" />

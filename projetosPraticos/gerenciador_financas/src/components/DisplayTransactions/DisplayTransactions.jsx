@@ -54,12 +54,12 @@ function DisplayTransactions() {
     const getButtonClasses = () => {
         return clsx(
             "cursor-pointer transition-colors duration-300",
-            "px-3 mb-1"
+            "px-3 pb-1"
         )
     }
 
     const getCardsClasses = clsx(
-        "text-lg font-semibold",
+        "text-md sm:text-lg font-semibold",
         "rounded-2xl p-2 shadow",
         "flex flex-col items-center"
     )
@@ -67,43 +67,43 @@ function DisplayTransactions() {
     return (
 
         <section className={clsx(
-            "space-y-6 px-6 pt-4 max-w-lg mx-auto",
+            "space-y-6 px-4 pt-4 sm:px-6 sm:pt-5 max-w-[350px] sm:max-w-lg mx-auto",
             "bg-white dark:bg-gray-800",
-            "shadow-md rounded-xl mb-10"
+            "shadow-lg rounded-xl mb-10"
         )}>
             {/* Cards de Resumo */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <Card
                     title="Receitas"
                     value={totalRevenues}
-                    icon={<ArrowUpRight className="text-green-700 w-10 h-10" />}
+                    icon={<ArrowUpRight className="text-green-600 dark:text-green-200 w-7 h-7 sm:w-10 sm:h-10" />}
                     className={clsx(
                         getCardsClasses,
-                        "bg-green-400")
+                        "bg-green-100 dark:bg-green-700")
                     }
-                    colorFont="text-lg text-green-700"
+                    colorFont="text-sm sm:text-lg text-green-700 dark:text-green-300"
                 />
 
                 <Card
                     title="Despesas"
                     value={totalExpenses}
-                    icon={<ArrowDownRight className="text-red-600 w-10 h-10" />}
+                    icon={<ArrowDownRight className="text-red-600 dark:text-red-200 w-7 h-7 sm:w-10 sm:h-10" />}
                     className={clsx(
                         getCardsClasses,
-                        "bg-red-100")
+                        "bg-red-100 dark:bg-red-700")
                     }
-                    colorFont="text-lg text-red-700"
+                    colorFont="text-sm sm:text-lg text-red-700 dark:text-red-300"
                 />
 
                 <Card
                     title="Saldo"
                     value={totalBalance()}
-                    icon={<DollarSign className="text-blue-600 w-9 h-9" />}
+                    icon={<DollarSign className="text-indigo-600 dark:text-indigo-200 w-7 h-7 sm:w-10 sm:h-10" />}
                     className={clsx(
                         getCardsClasses,
-                        "bg-blue-100")
+                        "bg-indigo-100 dark:bg-indigo-700")
                     }
-                    colorFont="text-lg text-blue-700"
+                    colorFont="text-sm sm:text-lg text-indigo-700 dark:text-indigo-300"
                 />
             </div>
 
@@ -112,8 +112,6 @@ function DisplayTransactions() {
                 "relative flex gap-3 font-semibold text-gray-500 dark:text-gray-300",
                 "border-b border-gray-300 dark:border-gray-600 mb-4" // border-b border-gray-300 pl-2 mb-4
             )}>
-
-
                 <Button
                     text="Todas"
                     ref={todasRef}
@@ -142,13 +140,12 @@ function DisplayTransactions() {
                 />
 
                 <span
-                    className="absolute bottom-0 h-[1px] bg-purple-700 dark:bg-purple-500 transition-all duration-300"
+                    className="absolute bottom-[-1px] h-[1px] bg-purple-700 dark:bg-purple-500 transition-all duration-300"
                     style={{
                         left: indicatorStyle.left,
                         width: indicatorStyle.width,
                     }}
                 />
-
             </nav>
 
             {/* Lista de Transações */}
@@ -158,7 +155,7 @@ function DisplayTransactions() {
                         key={transaction.id}
                         className={clsx(
                             "flex justify-between items-center",
-                            "border-b border-gray-300 dark:border-gray-600 pb-3"
+                            "border-b last:border-b-0 border-gray-300 dark:border-gray-600 pb-3"
                         )}
                     >
                         <div>
@@ -177,9 +174,7 @@ function DisplayTransactions() {
                             >
                                 {transaction.valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })}
                             </p>
-                            {/* <button>
-                                <Trash size={25} weight="fill" className="text-gray-500 hover:text-red-500 transition cursor-pointer" />
-                            </button> */}
+                            
                             <Button
                                 text={
                                     <Trash size={25} weight="fill"

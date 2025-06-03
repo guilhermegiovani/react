@@ -33,9 +33,9 @@ function AddTransaction() {
                 "bg-white dark:bg-gray-800",
                 "p-5",
                 "rounded-xl",
-                "shadow-md",
+                "shadow-lg",
                 "w-full",
-                "max-w-lg",
+                "max-w-[350px] sm:max-w-lg",
                 "mx-auto mb-5"
             )}
         >
@@ -107,7 +107,7 @@ function AddTransaction() {
                     <Button
                         text="Adicionar"
                         className={clsx(
-                            "bg-red-600 text-white font-medium px-5 py-2 rounded-md",
+                            "bg-red-600 text-white font-medium px-4 py-2 sm:px-6 rounded-md",
                             "hover:bg-red-500 dark:hover:bg-red-400",
                             "transition-colors duration-200 ease-in-out cursor-pointer"
                         )}

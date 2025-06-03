@@ -22,7 +22,7 @@ function ThemeToggle() {
     return (
         <Button
             handleClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded bg-gray-200 dark:bg-gray-800 text-base cursor-pointer"
+            className="p-2 rounded bg-gray-300 dark:bg-gray-800 text-base cursor-pointer"
             text={darkMode ? (
                 <Sun className="w-5 h-5 text-yellow-500" />
             ) : (

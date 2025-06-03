@@ -66,16 +66,20 @@ function DisplayTransactions() {
 
     return (
 
-        <section className="space-y-6 px-6 pt-4 max-w-lg mx-auto bg-white shadow-md rounded-xl mb-10">
+        <section className={clsx(
+            "space-y-6 px-6 pt-4 max-w-lg mx-auto",
+            "bg-white dark:bg-gray-800",
+            "shadow-md rounded-xl mb-10"
+        )}>
             {/* Cards de Resumo */}
             <div className="grid grid-cols-3 gap-4">
                 <Card
                     title="Receitas"
                     value={totalRevenues}
-                    icon={<ArrowUpRight className="text-green-600 w-10 h-10" />}
+                    icon={<ArrowUpRight className="text-green-700 w-10 h-10" />}
                     className={clsx(
                         getCardsClasses,
-                        "bg-green-100")
+                        "bg-green-400")
                     }
                     colorFont="text-lg text-green-700"
                 />
@@ -105,8 +109,8 @@ function DisplayTransactions() {
 
             {/* Filtros */}
             <nav className={clsx(
-                "relative flex gap-3 font-semibold text-gray-500",
-                "border-b border-gray-300 mb-4" // border-b border-gray-300 pl-2 mb-4
+                "relative flex gap-3 font-semibold text-gray-500 dark:text-gray-300",
+                "border-b border-gray-300 dark:border-gray-600 mb-4" // border-b border-gray-300 pl-2 mb-4
             )}>
 
 
@@ -138,7 +142,7 @@ function DisplayTransactions() {
                 />
 
                 <span
-                    className="absolute bottom-0 h-[1px] bg-purple-600 transition-all duration-300"
+                    className="absolute bottom-0 h-[1px] bg-purple-700 dark:bg-purple-500 transition-all duration-300"
                     style={{
                         left: indicatorStyle.left,
                         width: indicatorStyle.width,
@@ -152,11 +156,14 @@ function DisplayTransactions() {
                 {filteredTransactions.map((transaction) => (
                     <div
                         key={transaction.id}
-                        className="flex justify-between items-center border-b border-gray-300 pb-3"
+                        className={clsx(
+                            "flex justify-between items-center",
+                            "border-b border-gray-300 dark:border-gray-600 pb-3"
+                        )}
                     >
                         <div>
-                            <p className="text-base font-semibold text-gray-800">{transaction.descricao}</p>
-                            <p className="text-[12px] text-gray-600">{transaction.data}</p>
+                            <p className="text-base font-semibold text-gray-800 dark:text-gray-300">{transaction.descricao}</p>
+                            <p className="text-[12px] text-gray-600 dark:text-gray-500">{transaction.data}</p>
                         </div>
 
                         <div className="flex gap-4">

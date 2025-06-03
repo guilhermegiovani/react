@@ -1,6 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  mode: 'jit',
   darkMode: 'class',
   content: [
     "./index.html",
@@ -11,3 +10,4 @@ export default {
   },
   plugins: [],
 }
+

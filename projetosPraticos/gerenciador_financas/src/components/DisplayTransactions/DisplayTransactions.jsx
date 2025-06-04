@@ -1,17 +1,16 @@
 import { clsx } from "clsx"
 import Button from "../Button/Button"
 import Card from "../Card/Card"
-import { DollarSign, ArrowUpRight, ArrowDownRight } from "lucide-react"
+import DeleteModal from "../DeleteModal/DeleteModal"
+import { DollarSign, ArrowUpRight, ArrowDownRight, Ban } from "lucide-react"
 import { Trash } from 'phosphor-react'
 import { useEffect, useRef, useState } from "react"
 import { useTransaction } from "../TransactionContext/TransactionContext"
 
 function DisplayTransactions() {
 
-    const { transactions, deleteTransaction, expenses, revenues } = useTransaction()
+    const { transactions, cancelTransaction, expenses, revenues, handleDelete } = useTransaction()
 
-    // const [expenses, setExpenses] = useState(0)
-    // const [revenues, setRevenues] = useState(0)
     const totalExpenses = expenses.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     const totalRevenues = revenues.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     const totalBalance = () => {
@@ -22,6 +21,9 @@ function DisplayTransactions() {
     const todasRef = useRef(null)
     const receitasRef = useRef(null)
     const despesasRef = useRef(null)
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [selectedTransaction, setSelectedTransaction] = useState(null)
 
     const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
 
@@ -154,13 +156,22 @@ function DisplayTransactions() {
                     <div
                         key={transaction.id}
                         className={clsx(
-                            "flex justify-between items-center",
-                            "border-b last:border-b-0 border-gray-300 dark:border-gray-600 pb-3"
+                            "flex justify-between items-center", // max-h-72 overflow-y-auto
+                            "border-b last:border-b-0",
+                            "border-gray-300 dark:border-gray-600 pb-3",
+                            transaction.isCanceled === true ? "opacity-50" : ""
                         )}
                     >
                         <div>
-                            <p className="text-base font-semibold text-gray-800 dark:text-gray-300">{transaction.descricao}</p>
-                            <p className="text-[12px] text-gray-600 dark:text-gray-500">{transaction.data}</p>
+                            <p className={clsx(
+                                "text-base font-semibold",
+                                "text-gray-800 dark:text-gray-300",
+                                transaction.isCanceled === true ? "line-through text-gray-400" : ""
+                            )}>{transaction.descricao}</p>
+                            <p className={clsx(
+                                "text-[12px] text-gray-600 dark:text-gray-500",
+                                transaction.isCanceled === true ? "line-through text-gray-400" : ""
+                            )}>{transaction.data}</p>
                         </div>
 
                         <div className="flex gap-4">
@@ -174,62 +185,41 @@ function DisplayTransactions() {
                             >
                                 {transaction.valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })}
                             </p>
-                            
+
+                            <Button
+                                text={
+                                    <Ban size={25} weight="fill"
+                                        className="text-gray-500 hover:text-red-500 transition cursor-pointer"
+                                    />
+                                }
+                                handleClick={() => cancelTransaction(transaction.id)}
+                            />
+
                             <Button
                                 text={
                                     <Trash size={25} weight="fill"
                                         className="text-gray-500 hover:text-red-500 transition cursor-pointer"
                                     />
                                 }
-                                handleClick={() => deleteTransaction(transaction.id)}
+                                handleClick={() => {
+                                    setSelectedTransaction(transaction)
+                                    setIsModalOpen(true)
+                                }}
+                            // handleDelete(transaction.id, transaction.descricao, transaction.valor)
                             />
                         </div>
 
                     </div>
                 ))}
             </div>
+
+            <DeleteModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={(id) => handleDelete(id)}
+                transaction={selectedTransaction}
+            />
         </section>
-
-        // <section>
-
-        //     <div>
-        //         <div>
-        //             <p>Receitas</p>
-        //             <p>R$ 9.000,00</p>
-        //         </div>
-
-        //         <div>
-        //             <p>Despesas</p>
-        //             <p>R$ 6.200,00</p>
-        //         </div>
-
-        //         <div>
-        //             <p>Saldo</p>
-        //             <p>R$ 2.800,00</p>
-        //         </div>
-        //     </div>
-
-        //     <div>
-        //         <nav>
-        //             <Button text="Todas" />
-
-        //             <Button text="Receitas" />
-
-        //             <Button text="Despesas" />
-        //         </nav>
-
-        //         {nameTransaction.map((name, index) => (
-        //             <div>
-        //                 <p>{name}</p>
-        //                 <p>R$ {valueTransaction[index]}</p>
-        //             </div>
-        //         ))
-
-        //         }
-
-        //     </div>
-
-        // </section>
     )
 }
 

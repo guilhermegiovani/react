@@ -11,15 +11,17 @@ function AddTransaction() {
     const [description, setDescription] = useState("")
     const [value, setValue] = useState("")
     const [type, setType] = useState("")
+    const messageError = "ERROR! Por Favor, preencha todos os campos!"
+    const [isActive, setIsActive] = useState(false)
 
     const handleSubmit = () => {
         // console.log("description:", description)
         // console.log("value:", value)
         // console.log("type:", type)
 
-        if (description.trim() === "") return
-        if (value === "") return
-        if (type === "") return
+        if (description.trim() === "") return setIsActive(true)
+        if (value === "") return setIsActive(true)
+        if (type === "") return setIsActive(true)
 
         addTransaction(description.trim(), value, type)
         setDescription("")
@@ -39,6 +41,13 @@ function AddTransaction() {
                 "mx-auto mb-5"
             )}
         >
+            {isActive === true ?
+                <p className={clsx(
+                    "flex justify-center mb-2",
+                    "text-[14px] font-semibold text-red-500"
+                )}>{messageError}</p> : ""
+            }
+
             <h2 className={clsx(
                 "text-xl font-semibold mb-2",
                 "text-gray-800 dark:text-gray-100"
@@ -97,7 +106,7 @@ function AddTransaction() {
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                     >
-                        <option>Tipo</option>
+                        <option className="text-gray-800 dark:text-gray-100">Tipo</option>
                         <option value="Receita">Receita</option>
                         <option value="Despesa">Despesa</option>
                     </select>
@@ -114,6 +123,9 @@ function AddTransaction() {
                         handleClick={(e) => {
                             e.preventDefault()
                             handleSubmit()
+                            setTimeout(() => {
+                                setIsActive(false)
+                            }, 3000)
                         }}
                     />
                 </div>

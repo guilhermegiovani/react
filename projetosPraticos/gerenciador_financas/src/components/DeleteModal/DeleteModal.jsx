@@ -1,4 +1,4 @@
-import { Ban, X } from "lucide-react"
+import { X } from "lucide-react"
 import { clsx } from "clsx"
 import Button from "../Button/Button"
 
@@ -7,9 +7,10 @@ function DeleteModal({ isOpen, onClose, onConfirm, transaction }) {
 
     return (
         <section className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg w-full max-w-md transition">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg w-full max-w-[330px] sm:max-w-md transition">
+                
                 <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Confirmar Exclusão</h2>
+                    <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">Confirmar Exclusão</h2>
 
                     <Button
                         text={
@@ -19,7 +20,7 @@ function DeleteModal({ isOpen, onClose, onConfirm, transaction }) {
                     />
                 </div>
 
-                <p className="text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-[14px] sm:text-base text-gray-700 dark:text-gray-300 mb-4">
                     Você está prestes a excluir a transação <strong>{transaction.descricao}</strong> no valor de <strong>{transaction.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>. <br />
                     Isso irá <span className="text-red-500 font-medium">afetar o saldo</span>. Deseja continuar?
                 </p>

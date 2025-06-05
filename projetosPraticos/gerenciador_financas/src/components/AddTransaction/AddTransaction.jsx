@@ -2,17 +2,19 @@ import Input from "../Input/Input"
 import Button from "../Button/Button"
 import { clsx } from "clsx"
 import { useTransaction } from "../TransactionContext/TransactionContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function AddTransaction() {
 
-    const { addTransaction } = useTransaction()
+    const { addTransaction, transactions, editingTransaction } = useTransaction()
 
     const [description, setDescription] = useState("")
     const [value, setValue] = useState("")
     const [type, setType] = useState("")
-    const messageError = "ERROR! Por Favor, preencha todos os campos!"
+    const messageError = "ERROR! Um dos campos está vazio ou valor negativo!"
     const [isActive, setIsActive] = useState(false)
+
+    // const [newValue, setNewValue] = useState("")
 
     const handleSubmit = () => {
         // console.log("description:", description)
@@ -20,7 +22,7 @@ function AddTransaction() {
         // console.log("type:", type)
 
         if (description.trim() === "") return setIsActive(true)
-        if (value === "") return setIsActive(true)
+        if (value === "" || value < 0) return setIsActive(true)
         if (type === "") return setIsActive(true)
 
         addTransaction(description.trim(), value, type)
@@ -29,6 +31,17 @@ function AddTransaction() {
         setType("")
     }
 
+    const transactionEdit = transactions.filter((transaction) => transaction.isEditing === true)
+    // const [isEditingOpen, setIsEditingOpen] = useState(false)
+
+    useEffect(() => {
+        if (transactionEdit.length > 0) {
+            setValue(transactionEdit[0].valor)
+            setDescription(transactionEdit[0].descricao)
+            setType(transactionEdit[0].tipo)
+        }
+    }, [transactionEdit])
+    
     return (
         <section
             className={clsx(
@@ -114,7 +127,7 @@ function AddTransaction() {
 
                 <div className="flex justify-end">
                     <Button
-                        text="Adicionar"
+                        text={transactionEdit.length === 0 ? "Adicionar" : "Salvar"}
                         className={clsx(
                             "bg-red-600 text-white font-medium px-4 py-2 sm:px-6 rounded-md",
                             "hover:bg-red-500 dark:hover:bg-red-400",
@@ -122,7 +135,7 @@ function AddTransaction() {
                         )}
                         handleClick={(e) => {
                             e.preventDefault()
-                            handleSubmit()
+                            transactionEdit !== "" ? editingTransaction() : handleSubmit()
                             setTimeout(() => {
                                 setIsActive(false)
                             }, 3000)

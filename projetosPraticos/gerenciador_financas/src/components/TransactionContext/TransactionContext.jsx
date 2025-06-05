@@ -25,6 +25,7 @@ export function TransactionProvider({ children }) {
             id: uuidv4(),
             tipo: type,
             isCanceled: false,
+            isEditing: false,
             data: new Date().toLocaleDateString("pt-BR")
         }
 
@@ -36,11 +37,21 @@ export function TransactionProvider({ children }) {
         setTransactions(newArray)
     }
 
-    const handleDelete = (id) => {
-        // const confirmDelete = window.confirm(`A transação "${descricao}" de R$ ${valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })} será removida. Isso afetará o saldo!\n\nDeseja realmente deletar?`)
+    const editTransaction = (id) => {
+        const newArray = transactions.map((transaction) => transaction.id === id ? { ...transaction, isEditing: true } : transaction)
+        setTransactions(newArray)
+        console.log(newArray)
+    }
 
-        // if(confirmDelete) {
-        // }
+    const editingTransaction = () => {
+        const newArray = transactions.map((transaction) => transaction.isEditing === true ? {...transaction, isEditing: false } : transaction)
+
+        
+
+        setTransactions(newArray)
+    }
+
+    const handleDelete = (id) => {
         deleteTransaction(id)
     }
 
@@ -73,7 +84,7 @@ export function TransactionProvider({ children }) {
 
     return (
         <TransactionContext.Provider
-            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete }}
+            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete, editTransaction, editingTransaction }}
         >
             {children}
         </TransactionContext.Provider>

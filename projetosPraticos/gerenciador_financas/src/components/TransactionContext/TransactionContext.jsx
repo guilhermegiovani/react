@@ -36,12 +36,12 @@ export function TransactionProvider({ children }) {
         setTransactions(newArray)
     }
 
-    const handleDelete = (id, descricao, valor) => {
-        const confirmDelete = window.confirm(`A transação "${descricao}" de R$ ${valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })} será removida. Isso afetará o saldo!\n\nDeseja realmente deletar?`)
+    const handleDelete = (id) => {
+        // const confirmDelete = window.confirm(`A transação "${descricao}" de R$ ${valor.toLocaleString('pt-BR', { style: 'currency', currency: "BRL" })} será removida. Isso afetará o saldo!\n\nDeseja realmente deletar?`)
 
-        if(confirmDelete) {
-            deleteTransaction(id)
-        }
+        // if(confirmDelete) {
+        // }
+        deleteTransaction(id)
     }
 
     const cancelTransaction = (id) => {

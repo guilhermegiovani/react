@@ -1,49 +1,22 @@
 import { clsx } from "clsx"
 import Button from "../Button/Button"
-import Card from "../Card/Card"
 import DeleteModal from "../DeleteModal/DeleteModal"
-import { DollarSign, ArrowUpRight, ArrowDownRight, Ban } from "lucide-react"
+import { Ban } from "lucide-react"
 import { Trash } from 'phosphor-react'
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useTransaction } from "../TransactionContext/TransactionContext"
+import NavFilter from "../NavFilter/NavFilter"
+import SummaryCards from "../SummaryCards/SummaryCards"
 
 function DisplayTransactions() {
 
-    const { transactions, cancelTransaction, expenses, revenues, handleDelete } = useTransaction()
-
-    const totalExpenses = expenses.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-    const totalRevenues = revenues.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-    const totalBalance = () => {
-        const balance = revenues - expenses
-        return balance.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-    }
-
-    const todasRef = useRef(null)
-    const receitasRef = useRef(null)
-    const despesasRef = useRef(null)
+    const { transactions, cancelTransaction, handleDelete } = useTransaction()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedTransaction, setSelectedTransaction] = useState(null)
 
-    const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
 
     const [displayTransaction, setDisplayTransaction] = useState("Todas")
-
-    useEffect(() => {
-
-        const refs = {
-            Todas: todasRef,
-            Receitas: receitasRef,
-            Despesas: despesasRef
-        }
-
-        const activeRef = refs[displayTransaction]
-        if (activeRef?.current) {
-            const { offsetLeft, offsetWidth } = activeRef.current
-            setIndicatorStyle({ left: offsetLeft, width: offsetWidth })
-        }
-
-    }, [displayTransaction])
 
     let filteredTransactions = transactions
 
@@ -53,19 +26,6 @@ function DisplayTransactions() {
         filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Despesa")
     }
 
-    const getButtonClasses = () => {
-        return clsx(
-            "cursor-pointer transition-colors duration-300",
-            "px-3 pb-1"
-        )
-    }
-
-    const getCardsClasses = clsx(
-        "text-md sm:text-lg font-semibold",
-        "rounded-2xl p-2 shadow",
-        "flex flex-col items-center"
-    )
-
     return (
 
         <section className={clsx(
@@ -74,81 +34,12 @@ function DisplayTransactions() {
             "shadow-lg rounded-xl mb-10"
         )}>
             {/* Cards de Resumo */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-4">
-                <Card
-                    title="Receitas"
-                    value={totalRevenues}
-                    icon={<ArrowUpRight className="text-green-600 dark:text-green-200 w-7 h-7 sm:w-10 sm:h-10" />}
-                    className={clsx(
-                        getCardsClasses,
-                        "bg-green-100 dark:bg-green-700")
-                    }
-                    colorFont="text-sm sm:text-lg text-green-700 dark:text-green-300"
-                />
-
-                <Card
-                    title="Despesas"
-                    value={totalExpenses}
-                    icon={<ArrowDownRight className="text-red-600 dark:text-red-200 w-7 h-7 sm:w-10 sm:h-10" />}
-                    className={clsx(
-                        getCardsClasses,
-                        "bg-red-100 dark:bg-red-700")
-                    }
-                    colorFont="text-sm sm:text-lg text-red-700 dark:text-red-300"
-                />
-
-                <Card
-                    title="Saldo"
-                    value={totalBalance()}
-                    icon={<DollarSign className="text-indigo-600 dark:text-indigo-200 w-7 h-7 sm:w-10 sm:h-10" />}
-                    className={clsx(
-                        getCardsClasses,
-                        "bg-indigo-100 dark:bg-indigo-700")
-                    }
-                    colorFont="text-sm sm:text-lg text-indigo-700 dark:text-indigo-300"
-                />
-            </div>
+            
+            <SummaryCards />
 
             {/* Filtros */}
-            <nav className={clsx(
-                "relative flex gap-3 font-semibold text-gray-500 dark:text-gray-300",
-                "border-b border-gray-300 dark:border-gray-600 mb-4" // border-b border-gray-300 pl-2 mb-4
-            )}>
-                <Button
-                    text="Todas"
-                    ref={todasRef}
-                    className={getButtonClasses("Todas")}
-                    handleClick={() => {
-                        setDisplayTransaction("Todas")
-                    }}
-                />
 
-                <Button
-                    text="Receitas"
-                    ref={receitasRef}
-                    className={getButtonClasses("Receitas")}
-                    handleClick={() => {
-                        setDisplayTransaction("Receitas")
-                    }}
-                />
-
-                <Button
-                    text="Despesas"
-                    ref={despesasRef}
-                    className={getButtonClasses("Despesas")}
-                    handleClick={() => {
-                        setDisplayTransaction("Despesas")
-                    }}
-                />
-
-                <span
-                    className="absolute bottom-[-1px] h-[1px] bg-purple-700 dark:bg-purple-500 transition-all duration-300"
-                    style={{
-                        left: indicatorStyle.left,
-                        width: indicatorStyle.width,
-                    }}
-                />
-            </nav>
+            <NavFilter filterActive={setDisplayTransaction} />
 
             {/* Lista de Transações */}
             <div className="space-y-3">
@@ -205,7 +96,6 @@ function DisplayTransactions() {
                                     setSelectedTransaction(transaction)
                                     setIsModalOpen(true)
                                 }}
-                            // handleDelete(transaction.id, transaction.descricao, transaction.valor)
                             />
                         </div>
 

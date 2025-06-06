@@ -31,8 +31,8 @@ function DeleteModal({ isOpen, onClose, onConfirm, transaction }) {
                         handleClick={onClose}
                         className={clsx(
                             "px-4 py-2 rounded",
-                            "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200",
-                            "hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                            "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200",
+                            "hover:bg-gray-500 hover:text-gray-200 dark:hover:bg-gray-600 transition"
                         )}
                     />
 

@@ -8,13 +8,12 @@ import { useTransaction } from "../TransactionContext/TransactionContext"
 import NavFilter from "../NavFilter/NavFilter"
 import SummaryCards from "../SummaryCards/SummaryCards"
 
-function DisplayTransactions() {
+function DisplayTransactions({ value, setValue, description, setDescription, type, setType, isEditingOpen, setIsEditingOpen }) {
 
     const { transactions, cancelTransaction, handleDelete, editTransaction } = useTransaction()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [selectedTransaction, setSelectedTransaction] = useState(null)
-
 
     const [displayTransaction, setDisplayTransaction] = useState("Todas")
 
@@ -24,6 +23,13 @@ function DisplayTransactions() {
         filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Receita")
     } else if (displayTransaction === "Despesas") {
         filteredTransactions = transactions.filter((transaction) => transaction.tipo === "Despesa")
+    }
+
+    const starEdit = (transaction) => {
+        setDescription(transaction.descricao)
+        setValue(transaction.valor)
+        setType(transaction.tipo)
+        setIsEditingOpen(true)
     }
 
     return (
@@ -54,7 +60,8 @@ function DisplayTransactions() {
                             "flex justify-between items-center", // max-h-72 overflow-y-auto
                             "border-b last:border-b-0",
                             "border-gray-300 dark:border-gray-600 pb-3",
-                            transaction.isCanceled === true ? "opacity-50" : ""
+                            transaction.isCanceled === true ? "opacity-50" : "",
+                            // transaction.tipo === "Receita" ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800",
                         )}
                     >
                         <div>
@@ -87,7 +94,10 @@ function DisplayTransactions() {
                                         className="text-gray-500 hover:text-blue-500 transition cursor-pointer"
                                     />
                                 }
-                                handleClick={() => editTransaction(transaction.id)}
+                                handleClick={() => {
+                                    starEdit(transaction)
+                                    editTransaction(transaction.id)
+                                }}
                             />
 
                             <Button

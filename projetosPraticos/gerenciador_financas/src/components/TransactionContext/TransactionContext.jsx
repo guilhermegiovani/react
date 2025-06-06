@@ -1,7 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react"
 import { v4 as uuidv4 } from 'uuid';
 
-
 export const TransactionContext = createContext()
 
 export function TransactionProvider({ children }) {
@@ -40,13 +39,16 @@ export function TransactionProvider({ children }) {
     const editTransaction = (id) => {
         const newArray = transactions.map((transaction) => transaction.id === id ? { ...transaction, isEditing: true } : transaction)
         setTransactions(newArray)
-        console.log(newArray)
     }
 
-    const editingTransaction = () => {
-        const newArray = transactions.map((transaction) => transaction.isEditing === true ? {...transaction, isEditing: false } : transaction)
+    const [isActive, setIsActive] = useState(false)
 
-        
+    const editingTransaction = (description, value, type) => {
+        if (description.trim() === "") return setIsActive(true)
+        if (value === "" || value < 0) return setIsActive(true)
+        if (type === "") return setIsActive(true)
+
+        const newArray = transactions.map((transaction) => transaction.isEditing === true ? {...transaction, descricao: description, valor: Number(value), tipo: type, isEditing: false } : transaction)
 
         setTransactions(newArray)
     }
@@ -84,7 +86,7 @@ export function TransactionProvider({ children }) {
 
     return (
         <TransactionContext.Provider
-            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete, editTransaction, editingTransaction }}
+            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete, editTransaction, editingTransaction, isActive, setIsActive }}
         >
             {children}
         </TransactionContext.Provider>

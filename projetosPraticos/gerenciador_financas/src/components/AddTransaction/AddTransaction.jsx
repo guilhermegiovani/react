@@ -2,46 +2,30 @@ import Input from "../Input/Input"
 import Button from "../Button/Button"
 import { clsx } from "clsx"
 import { useTransaction } from "../TransactionContext/TransactionContext"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-function AddTransaction() {
+function AddTransaction({ value, setValue, description, setDescription, type, setType, isEditingOpen, setIsEditingOpen }) {
 
-    const { addTransaction, transactions, editingTransaction } = useTransaction()
+    const { addTransaction, transactions, editingTransaction, isActive, setIsActive } = useTransaction()
 
-    const [description, setDescription] = useState("")
-    const [value, setValue] = useState("")
-    const [type, setType] = useState("")
     const messageError = "ERROR! Um dos campos está vazio ou valor negativo!"
-    const [isActive, setIsActive] = useState(false)
-
-    // const [newValue, setNewValue] = useState("")
 
     const handleSubmit = () => {
-        // console.log("description:", description)
-        // console.log("value:", value)
-        // console.log("type:", type)
 
         if (description.trim() === "") return setIsActive(true)
         if (value === "" || value < 0) return setIsActive(true)
         if (type === "") return setIsActive(true)
 
         addTransaction(description.trim(), value, type)
+    }
+
+    const resetForm = () => {
         setDescription("")
         setValue("")
         setType("")
+        setIsEditingOpen(false)
     }
 
-    const transactionEdit = transactions.filter((transaction) => transaction.isEditing === true)
-    // const [isEditingOpen, setIsEditingOpen] = useState(false)
-
-    useEffect(() => {
-        if (transactionEdit.length > 0) {
-            setValue(transactionEdit[0].valor)
-            setDescription(transactionEdit[0].descricao)
-            setType(transactionEdit[0].tipo)
-        }
-    }, [transactionEdit])
-    
     return (
         <section
             className={clsx(
@@ -127,7 +111,7 @@ function AddTransaction() {
 
                 <div className="flex justify-end">
                     <Button
-                        text={transactionEdit.length === 0 ? "Adicionar" : "Salvar"}
+                        text={isEditingOpen === false ? "Adicionar" : "Salvar"}
                         className={clsx(
                             "bg-red-600 text-white font-medium px-4 py-2 sm:px-6 rounded-md",
                             "hover:bg-red-500 dark:hover:bg-red-400",
@@ -135,12 +119,33 @@ function AddTransaction() {
                         )}
                         handleClick={(e) => {
                             e.preventDefault()
-                            transactionEdit !== "" ? editingTransaction() : handleSubmit()
+
+                            isEditingOpen !== false ? editingTransaction(description, value, type) : handleSubmit()
+                            
+                            resetForm()
+
                             setTimeout(() => {
                                 setIsActive(false)
                             }, 3000)
                         }}
                     />
+
+                    {isEditingOpen !== false ?
+                        <Button
+                            text="Cancelar"
+                            className={clsx(
+                                "px-4 py-2 sm=px-6 ml-2 rounded-md",
+                                "bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200",
+                                "hover:bg-gray-500 hover:text-gray-200 dark:hover:bg-gray-600 transition"
+                            )}
+                            handleClick={(e) => {
+                                e.preventDefault()
+                                resetForm()
+                            }}
+                        />
+                        : ""
+
+                    }
                 </div>
             </form>
         </section>

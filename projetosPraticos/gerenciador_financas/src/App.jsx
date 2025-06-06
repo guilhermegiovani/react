@@ -5,8 +5,14 @@ import AddTransaction from './components/AddTransaction/AddTransaction'
 import DisplayTransactions from './components/DisplayTransactions/DisplayTransactions'
 import ThemeToggle from './components/ThemeToggle/ThemeToggle'
 import { clsx } from "clsx"
+import { useState } from 'react'
 
 function App() {
+
+  const [description, setDescription] = useState("")
+  const [value, setValue] = useState("")
+  const [type, setType] = useState("")
+  const [isEditingOpen, setIsEditingOpen] = useState(false)
 
   return (
     <main className={clsx(
@@ -16,8 +22,26 @@ function App() {
     )}>
       <ThemeToggle />
       <Header />
-      <AddTransaction />
-      <DisplayTransactions />
+      <AddTransaction
+        description={description}
+        setDescription={setDescription}
+        value={value}
+        setValue={setValue}
+        type={type}
+        setType={setType}
+        isEditingOpen={isEditingOpen}
+        setIsEditingOpen={setIsEditingOpen}
+      />
+      <DisplayTransactions
+        description={description}
+        setDescription={setDescription}
+        value={value}
+        setValue={setValue}
+        type={type}
+        setType={setType}
+        isEditingOpen={isEditingOpen}
+        setIsEditingOpen={setIsEditingOpen}
+      />
     </main>
   )
 }

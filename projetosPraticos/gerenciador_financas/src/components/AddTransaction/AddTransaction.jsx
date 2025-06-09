@@ -6,9 +6,10 @@ import { useState } from "react"
 
 function AddTransaction({ value, setValue, description, setDescription, type, setType, isEditingOpen, setIsEditingOpen }) {
 
-    const { addTransaction, transactions, editingTransaction, isActive, setIsActive } = useTransaction()
+    const { addTransaction, transactions, editingTransaction, isActive, setIsActive, cancelEdit, sucessMessage, setSucessMessage } = useTransaction()
 
     const messageError = "ERROR! Um dos campos está vazio ou valor negativo!"
+    const [sucessMessageEdit, setSucessMessageEdit] = useState("")
 
     const handleSubmit = () => {
 
@@ -38,11 +39,18 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
                 "mx-auto mb-5"
             )}
         >
-            {isActive === true ?
+            {isActive &&
                 <p className={clsx(
                     "flex justify-center mb-2",
                     "text-[14px] font-semibold text-red-500"
-                )}>{messageError}</p> : ""
+                )}>{messageError}</p>
+            }
+
+            {sucessMessage &&
+                <p className={clsx(
+                    "flex justify-center mb-2",
+                    "font-semibold text-green-500"
+                )}>{sucessMessageEdit}</p>
             }
 
             <h2 className={clsx(
@@ -52,7 +60,9 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
                 Adicionar Transação
             </h2>
 
-            <form className={clsx("flex", "flex-col", "gap-4")}>
+            <form
+                className={clsx("flex", "flex-col", "gap-4")}
+            >
                 <Input
                     type="text"
                     placeholder="Descrição"
@@ -111,7 +121,7 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
 
                 <div className="flex justify-end">
                     <Button
-                        text={isEditingOpen === false ? "Adicionar" : "Salvar"}
+                        text={isEditingOpen !== true ? "Adicionar" : "Salvar"}
                         className={clsx(
                             "bg-red-600 text-white font-medium px-4 py-2 sm:px-6 rounded-md",
                             "hover:bg-red-500 dark:hover:bg-red-400",
@@ -120,12 +130,23 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
                         handleClick={(e) => {
                             e.preventDefault()
 
-                            isEditingOpen !== false ? editingTransaction(description, value, type) : handleSubmit()
-                            
+                            // transactions.some((t) => t.isEditing) ? editingTransaction(description, value, type) : handleSubmit()
+
+                            const isEditing = transactions.some((t) => t.isEditing)
+
+                            if (isEditing) {
+                                editingTransaction(description, value, type)
+                                setSucessMessageEdit("Transação Editada com sucesso!")
+                            } else {
+                                handleSubmit()
+                                setSucessMessageEdit("Transação adicionada com sucesso!")
+                            }
+
                             resetForm()
 
                             setTimeout(() => {
                                 setIsActive(false)
+                                setSucessMessage(false)
                             }, 3000)
                         }}
                     />
@@ -141,6 +162,7 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
                             handleClick={(e) => {
                                 e.preventDefault()
                                 resetForm()
+                                cancelEdit()
                             }}
                         />
                         : ""
@@ -148,7 +170,7 @@ function AddTransaction({ value, setValue, description, setDescription, type, se
                     }
                 </div>
             </form>
-        </section>
+        </section >
     )
 }
 

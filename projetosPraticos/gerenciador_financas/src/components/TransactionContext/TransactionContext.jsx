@@ -14,7 +14,7 @@ export function TransactionProvider({ children }) {
         calculateExpenses()
         calculateRevenues()
 
-        localStorage.setItem("transactions", JSON.stringify(transactions))
+        // localStorage.setItem("transactions", JSON.stringify(transactions))
     }, [transactions])
 
     const addTransaction = (description, value, type) => {
@@ -28,7 +28,11 @@ export function TransactionProvider({ children }) {
             data: new Date().toLocaleDateString("pt-BR")
         }
 
-        setTransactions((prev) => [...prev, newTransaction])
+        const updatedTransactions = [...transactions, newTransaction]
+
+        setTransactions(updatedTransactions)
+        localStorage.setItem("transactions", JSON.stringify(updatedTransactions))
+        setSucessMessage(true)
     }
 
     const deleteTransaction = (id) => {
@@ -37,28 +41,43 @@ export function TransactionProvider({ children }) {
     }
 
     const editTransaction = (id) => {
-        const newArray = transactions.map((transaction) => transaction.id === id ? { ...transaction, isEditing: true } : transaction)
+        const newArray = transactions.map((transaction) => transaction.id === id
+            ? { ...transaction, isEditing: true }
+            : { ...transaction, isEditing: false })
         setTransactions(newArray)
     }
 
     const [isActive, setIsActive] = useState(false)
+    const [sucessMessage, setSucessMessage] = useState(false)
 
     const editingTransaction = (description, value, type) => {
         if (description.trim() === "") return setIsActive(true)
         if (value === "" || value < 0) return setIsActive(true)
         if (type === "") return setIsActive(true)
 
-        const newArray = transactions.map((transaction) => transaction.isEditing === true ? {...transaction, descricao: description, valor: Number(value), tipo: type, isEditing: false } : transaction)
+        const newArray = transactions.map((transaction) => transaction.isEditing === true ? { ...transaction, descricao: description, valor: Number(value), tipo: type, isEditing: false } : transaction)
 
+        setTransactions(newArray)
+        setSucessMessage(true)
+    }
+
+    const cancelEdit = () => {
+        const newArray = transactions.map((transaction) => ({ ...transaction, isEditing: false }))
         setTransactions(newArray)
     }
 
+    const [sucessMessageDelete, setSucessMessageDelete] = useState(false)
+
     const handleDelete = (id) => {
         deleteTransaction(id)
+        setSucessMessageDelete(true)
+        setTimeout(() => {
+            setSucessMessageDelete(false)
+        }, 3000)
     }
 
     const cancelTransaction = (id) => {
-        const newArray = transactions.map((transaction) => transaction.id === id ? { ...transaction, isCanceled: true } : transaction)
+        const newArray = transactions.map((transaction) => transaction.id === id ? { ...transaction, isCanceled: true, isEditing: false } : transaction)
         setTransactions(newArray)
     }
 
@@ -86,7 +105,7 @@ export function TransactionProvider({ children }) {
 
     return (
         <TransactionContext.Provider
-            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete, editTransaction, editingTransaction, isActive, setIsActive }}
+            value={{ transactions, addTransaction, deleteTransaction, cancelTransaction, expenses, revenues, handleDelete, editTransaction, editingTransaction, isActive, setIsActive, cancelEdit, sucessMessage, setSucessMessage, sucessMessageDelete }}
         >
             {children}
         </TransactionContext.Provider>

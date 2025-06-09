@@ -61,6 +61,7 @@ function DisplayTransactions({ value, setValue, description, setDescription, typ
                             "border-b last:border-b-0",
                             "border-gray-300 dark:border-gray-600 pb-3",
                             transaction.isCanceled === true ? "opacity-50" : "",
+                            transaction.isEditing && "ring-2 ring-blue-500 dark:ring-blue-300 px-2"
                             // transaction.tipo === "Receita" ? "bg-green-100 dark:bg-green-800" : "bg-red-100 dark:bg-red-800",
                         )}
                     >
@@ -70,10 +71,17 @@ function DisplayTransactions({ value, setValue, description, setDescription, typ
                                 "text-gray-800 dark:text-gray-300",
                                 transaction.isCanceled === true ? "line-through text-gray-400" : ""
                             )}>{transaction.descricao}</p>
+
                             <p className={clsx(
                                 "text-[12px] text-gray-600 dark:text-gray-500",
                                 transaction.isCanceled === true ? "line-through text-gray-400" : ""
                             )}>{transaction.data}</p>
+
+                            {transaction.isEditing && (
+                                <span className="text-blue-600 dark:text-blue-300 text-sm font-semibold">
+                                    Editando...
+                                </span>
+                            )}
                         </div>
 
                         <div className="flex gap-4">
@@ -91,12 +99,17 @@ function DisplayTransactions({ value, setValue, description, setDescription, typ
                             <Button
                                 text={
                                     <Pencil size={25} weight="fill"
-                                        className="text-gray-500 hover:text-blue-500 transition cursor-pointer"
+                                        className={clsx(
+                                            "text-gray-500 transition",
+                                            transaction.isCanceled !== true ? "hover:text-blue-500 cursor-pointer" : ""
+                                        )}
                                     />
                                 }
                                 handleClick={() => {
-                                    starEdit(transaction)
-                                    editTransaction(transaction.id)
+                                    if (transaction.isCanceled !== true) {
+                                        starEdit(transaction)
+                                        editTransaction(transaction.id)
+                                    }
                                 }}
                             />
 
@@ -106,7 +119,9 @@ function DisplayTransactions({ value, setValue, description, setDescription, typ
                                         className="text-gray-500 hover:text-red-500 transition cursor-pointer"
                                     />
                                 }
-                                handleClick={() => cancelTransaction(transaction.id)}
+                                handleClick={() => {
+                                    cancelTransaction(transaction.id)
+                                }}
                             />
 
                             <Button
